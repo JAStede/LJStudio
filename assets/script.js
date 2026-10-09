@@ -229,3 +229,62 @@
     element.replaceChildren(svg);
   });
 })();
+/* LJ Studio - laatste blauwe pijl in decoratief vlak */
+(() => {
+  const selectors = '.split-art, .shape-frame, .shape-badge, .shape-disc';
+
+  document.querySelectorAll(selectors).forEach(container => {
+    const walker = document.createTreeWalker(
+      container,
+      NodeFilter.SHOW_TEXT
+    );
+
+    const nodes = [];
+
+    while (walker.nextNode()) {
+      if (walker.currentNode.nodeValue.includes('↗')) {
+        nodes.push(walker.currentNode);
+      }
+    }
+
+    nodes.forEach(node => {
+      const parts = node.nodeValue.split('↗');
+      const fragment = document.createDocumentFragment();
+
+      parts.forEach((part, index) => {
+        if (index > 0) {
+          const svg = document.createElementNS(
+            'http://www.w3.org/2000/svg',
+            'svg'
+          );
+
+          svg.setAttribute('viewBox', '0 0 24 24');
+          svg.setAttribute('width', '1em');
+          svg.setAttribute('height', '1em');
+          svg.setAttribute('fill', 'none');
+          svg.setAttribute('stroke', 'currentColor');
+          svg.setAttribute('stroke-width', '2');
+          svg.setAttribute('stroke-linecap', 'round');
+          svg.setAttribute('stroke-linejoin', 'round');
+          svg.setAttribute('aria-hidden', 'true');
+
+          svg.style.display = 'inline-block';
+          svg.style.verticalAlign = '-0.12em';
+
+          const path = document.createElementNS(
+            'http://www.w3.org/2000/svg',
+            'path'
+          );
+
+          path.setAttribute('d', 'M7 17 17 7 M8 7h9v9');
+          svg.appendChild(path);
+          fragment.appendChild(svg);
+        }
+
+        fragment.appendChild(document.createTextNode(part));
+      });
+
+      node.replaceWith(fragment);
+    });
+  });
+})();

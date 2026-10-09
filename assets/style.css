@@ -15,9 +15,23 @@
 @media(max-width:920px){.header-inner{height:70px}.header-cta{display:none}.menu-toggle{display:block;margin-left:auto}.nav{position:absolute;top:70px;left:0;right:0;display:none;flex-direction:column;align-items:stretch;gap:0;margin:0;padding:14px 32px 24px;background:#0b0b0b;border-bottom:1px solid #d8aa5c55;box-shadow:0 30px 50px #0008}.nav.open{display:flex}.nav a{padding:15px 0;font-size:15px;border-bottom:1px solid #ffffff16}.nav-mobile-cta{display:block!important;color:var(--gold)!important}.hero-grid{grid-template-columns:1fr;gap:20px;padding:75px 0 90px}.hero-stage{height:470px}.stage-panel{height:425px;width:min(100%,420px)}.stage-panel img{height:315px}.stage-orbit{width:390px;height:390px}.stage-orbit-two{width:470px;height:470px}.hero-proof{margin-top:40px}.cards,.price-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.price-featured{grid-column:1/-1}.price-card{min-height:490px}.work-grid,.split,.faq-layout,.contact-layout{grid-template-columns:1fr}.split-reverse .split-copy{order:0}.split-art{min-height:400px}.footer-grid{grid-template-columns:1.3fr 1fr 1fr}.footer-col:last-child{grid-column:2/-1}.footer-intro{align-items:start;flex-direction:column}.faq-layout{gap:20px}}
 @media(max-width:600px){.container{width:calc(100% - 36px)}.topbar-inner{height:29px}.topbar-inner span{font-size:8px}.topbar-inner a{font-size:8px}.header-inner{height:67px}.nav{top:67px}.logo-monogram{font-size:34px}.logo-word{font-size:13px;letter-spacing:.26em}.logo-word small{font-size:6px;letter-spacing:.1em}.section{padding:76px 0}.section-heading{margin-bottom:35px}.section-heading h2{font-size:clamp(35px,10vw,54px)}.hero-grid{padding:64px 0 65px}.hero h1{font-size:clamp(49px,12vw,74px);margin:23px 0}.hero-lead{font-size:15px}.hero-actions{gap:10px}.hero-actions .btn{min-height:48px}.hero-proof{flex-direction:column;gap:13px;margin-top:40px}.hero-stage{height:360px}.stage-panel{height:340px;width:84%}.stage-panel img{height:240px}.stage-meta{padding:17px 14px 8px;font-size:7px}.stage-bottom{font-size:7px;padding:13px}.stage-orbit{width:290px;height:290px}.stage-orbit-two{width:360px;height:360px}.stage-tag{right:0;bottom:18px;font-size:8px}.hero-scroll{display:none}.marquee{padding:14px 0}.marquee span{font-size:10px}.cards,.price-grid,.work-grid{grid-template-columns:1fr}.service-card{min-height:350px}.service-symbol{font-size:125px}.work-art{height:285px}.work-browser{height:240px}.work-browser-content{padding:20px}.work-art-brand strong{font-size:84px}.section-footer{flex-direction:column;align-items:flex-start}.split{gap:22px}.split-art{min-height:340px}.shape-frame{min-height:300px}.shape-type{margin:40px 0;font-size:55px}.art-shell{min-height:330px}.art-shell-body{padding:22px}.art-giant{font-size:55px}.art-float{font-size:22px}.price-featured{grid-column:auto}.price-card{min-height:0;padding:30px 23px}.care-strip{flex-direction:column;align-items:flex-start}.care-strip h3 span{display:block;margin:5px 0 0}.step{grid-template-columns:42px 1fr 20px;gap:10px;padding:21px 0}.step h3{font-size:21px}.step p{font-size:12px}.faq-item summary{font-size:14px}.contact-band{padding:65px 0}.band-inner{flex-direction:column;align-items:flex-start}.contact-band h2{font-size:clamp(39px,10vw,56px)}.page-hero-inner{min-height:300px;padding:65px 0}.page-hero h1{font-size:clamp(48px,11vw,68px)}.page-lead{font-size:15px}.page-symbol{font-size:280px;right:-70px;top:-20px}.contact-layout{gap:25px}.form-panel{padding:20px}.form-grid{grid-template-columns:1fr;gap:0}.footer{padding-top:55px}.footer-intro{padding-bottom:45px}.footer-grid{grid-template-columns:1fr 1fr;gap:40px 22px;padding:45px 0}.footer-brand{grid-column:1/-1}.footer-col:last-child{grid-column:1/-1}.footer-bottom{flex-direction:column}.section-heading p{font-size:14px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.reveal{opacity:1;transform:none}}
-/* Gele cirkel voor het zwarte vlak */
-.hero-sticker,
-.hero-badge {
-  position: relative;
-  z-index: 10;
-}
+
+/* LJ Studio — verfijnde bewegingen (2026) */
+/* Grote ster op de donkere paginakoppen draait rustig rond. */
+.page-symbol{transform-origin:center center;animation:lj-symbol-turn 38s linear infinite;will-change:transform}
+@keyframes lj-symbol-turn{to{transform:rotate(360deg)}}
+/* Werkwijze: de twee regels komen na elkaar binnen. */
+.process-heading h2 .process-line{display:inline-block;opacity:0;transform:translateY(20px);transition:opacity .75s ease,transform .85s cubic-bezier(.2,.7,.2,1)}
+.process-heading.visible h2 .process-line{opacity:1;transform:translateY(0)}
+.process-heading.visible h2 .process-line:nth-of-type(2){transition-delay:.18s}
+/* De processtappen verschijnen als een rustige cascade. */
+.process-steps .step{transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1),background-color .3s ease,padding-left .3s ease}
+.process-steps .step:nth-child(2){transition-delay:.09s}
+.process-steps .step:nth-child(3){transition-delay:.18s}
+.process-steps .step:nth-child(4){transition-delay:.27s}
+.process-steps .step:hover{background-color:rgba(207,166,95,.07);padding-left:12px}
+.process-steps .step-arrow{transition:transform .3s ease}
+.process-steps .step:hover .step-arrow{transform:translate(4px,-4px)}
+/* De gouden IMPACT-badge blijft vóór het donkere ontwerp. */
+.shape-badge{z-index:3;box-shadow:0 16px 35px rgba(0,0,0,.12)}
+@media(prefers-reduced-motion:reduce){.page-symbol{animation:none!important;will-change:auto}.process-heading h2 .process-line{opacity:1;transform:none;transition:none}.process-steps .step{transition:none}}

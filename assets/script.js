@@ -140,3 +140,59 @@
     star.textContent = '\u2733\uFE0E';
   });
 })();
+
+/* LJ Studio - SVG pijltjes voor desktop en mobiel */
+(() => {
+  const svgNS = 'http://www.w3.org/2000/svg';
+
+  function createArrow() {
+    const svg = document.createElementNS(svgNS, 'svg');
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('width', '1em');
+    svg.setAttribute('height', '1em');
+    svg.setAttribute('fill', 'none');
+    svg.setAttribute('stroke', 'currentColor');
+    svg.setAttribute('stroke-width', '2');
+    svg.setAttribute('stroke-linecap', 'round');
+    svg.setAttribute('stroke-linejoin', 'round');
+    svg.setAttribute('aria-hidden', 'true');
+
+    svg.style.display = 'inline-block';
+    svg.style.verticalAlign = '-0.12em';
+    svg.style.flexShrink = '0';
+
+    const path = document.createElementNS(svgNS, 'path');
+    path.setAttribute('d', 'M7 17 17 7 M8 7h9v9');
+    svg.appendChild(path);
+
+    return svg;
+  }
+
+  document.querySelectorAll('a, button').forEach(element => {
+    const walker = document.createTreeWalker(
+      element,
+      NodeFilter.SHOW_TEXT
+    );
+
+    const nodes = [];
+    while (walker.nextNode()) {
+      if (walker.currentNode.nodeValue.includes('↗')) {
+        nodes.push(walker.currentNode);
+      }
+    }
+
+    nodes.forEach(node => {
+      const parts = node.nodeValue.split('↗');
+      const fragment = document.createDocumentFragment();
+
+      parts.forEach((part, index) => {
+        if (index > 0) {
+          fragment.appendChild(createArrow());
+        }
+        fragment.appendChild(document.createTextNode(part));
+      });
+
+      node.replaceWith(fragment);
+    });
+  });
+})();

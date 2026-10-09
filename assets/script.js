@@ -1,21 +1,142 @@
-(()=>{const menu=document.querySelector('[data-menu-toggle]'),nav=document.querySelector('[data-nav]');const close=()=>{nav?.classList.remove('open');menu?.setAttribute('aria-expanded','false');document.body.classList.remove('menu-open')};menu?.addEventListener('click',()=>{const open=nav.classList.toggle('open');menu.setAttribute('aria-expanded',String(open));document.body.classList.toggle('menu-open',open)});nav?.querySelectorAll('a').forEach(a=>a.addEventListener('click',close));document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});document.querySelectorAll('[data-year]').forEach(x=>x.textContent=new Date().getFullYear());const items=document.querySelectorAll('.reveal');if('IntersectionObserver'in window){const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target)}}),{threshold:.07,rootMargin:'0px 0px 30px 0px'});items.forEach(x=>io.observe(x))}else items.forEach(x=>x.classList.add('visible'));const progress=document.createElement('div');progress.className='scroll-progress';document.body.append(progress);let raf=false;window.addEventListener('scroll',()=>{if(raf)return;raf=true;requestAnimationFrame(()=>{const h=document.documentElement;progress.style.transform=`scaleX(${Math.max(0,Math.min(1,h.scrollTop/Math.max(1,h.scrollHeight-h.clientHeight)))})`;raf=false})},{passive:true});document.querySelectorAll('[data-contact-email]').forEach(a=>{a.href='mailto:info@ljstudio.nl';a.textContent='info@ljstudio.nl'});const params=new URLSearchParams(location.search),subject=document.querySelector('#onderwerp'),pakket=params.get('pakket');if(subject&&pakket){const o=[...subject.options].find(o=>o.textContent.toLowerCase().includes(pakket.toLowerCase()));if(o)subject.value=o.value}document.querySelectorAll('[data-mail-form]').forEach(form=>form.addEventListener('submit',e=>{e.preventDefault();if(!form.reportValidity())return;const data=new FormData(form),lines=['Nieuwe aanvraag via LJ Studio','',...Array.from(data.entries(),([k,v])=>k+': '+String(v).trim())],url='mailto:info@ljstudio.nl?subject='+encodeURIComponent('LJ Studio aanvraag - '+(data.get('onderwerp')||'Website'))+'&body='+encodeURIComponent(lines.join('\n'));const status=form.querySelector('.form-status');if(status)status.textContent='Je e-mailprogramma wordt geopend. Verstuur de e-mail zelf om de aanvraag te verzenden.';window.location.href=url}));})();/* LJ Studio - dezelfde gouden ster op alle pagina's */
-document.querySelectorAll('.page-symbol').forEach(star => {
-  star.textContent = '\u2733\uFE0E';
-});
-/* LJ Studio - consistente pijltjes op alle apparaten */
-document.querySelectorAll('body *').forEach(element => {
-  for (const node of element.childNodes) {
-    if (node.nodeType === Node.TEXT_NODE && node.textContent.includes('↗')) {
-      node.textContent = node.textContent.replaceAll('↗', '\u2197\uFE0E');
-    }
+
+(() => {
+  // Mobiele navigatie
+  const menu = document.querySelector('[data-menu-toggle]');
+  const nav = document.querySelector('[data-nav]');
+
+  const close = () => {
+    nav?.classList.remove('open');
+    menu?.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('menu-open');
+  };
+
+  menu?.addEventListener('click', () => {
+    if (!nav) return;
+
+    const open = nav.classList.toggle('open');
+    menu.setAttribute('aria-expanded', String(open));
+    document.body.classList.toggle('menu-open', open);
+  });
+
+  nav?.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', close);
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') close();
+  });
+
+  // Automatisch jaartal
+  document.querySelectorAll('[data-year]').forEach(element => {
+    element.textContent = new Date().getFullYear();
+  });
+
+  // Scrollanimaties
+  const items = document.querySelectorAll('.reveal');
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.07,
+      rootMargin: '0px 0px 30px 0px'
+    });
+
+    items.forEach(item => observer.observe(item));
+  } else {
+    items.forEach(item => item.classList.add('visible'));
   }
-});
-/* LJ Studio - voorkom emojiweergave van pijltjes */
-.btn,
-.header-cta,
-.footer-cta,
-.topbar a,
-.nav a,
-.social-row a {
-  font-variant-emoji: text;
-}
+
+  // Scrollvoortgang
+  const progress = document.createElement('div');
+  progress.className = 'scroll-progress';
+  document.body.append(progress);
+
+  let raf = false;
+
+  window.addEventListener('scroll', () => {
+    if (raf) return;
+    raf = true;
+
+    requestAnimationFrame(() => {
+      const html = document.documentElement;
+      const maximum = Math.max(
+        1,
+        html.scrollHeight - html.clientHeight
+      );
+
+      const percentage = Math.max(
+        0,
+        Math.min(1, html.scrollTop / maximum)
+      );
+
+      progress.style.transform = `scaleX(${percentage})`;
+      raf = false;
+    });
+  }, { passive: true });
+
+  // Contactgegevens
+  document.querySelectorAll('[data-contact-email]').forEach(link => {
+    link.href = 'mailto:info@ljstudio.nl';
+    link.textContent = 'info@ljstudio.nl';
+  });
+
+  // Automatisch pakket selecteren via URL
+  const params = new URLSearchParams(location.search);
+  const subject = document.querySelector('#onderwerp');
+  const pakket = params.get('pakket');
+
+  if (subject && pakket) {
+    const option = [...subject.options].find(option =>
+      option.textContent.toLowerCase().includes(pakket.toLowerCase())
+    );
+
+    if (option) subject.value = option.value;
+  }
+
+  // Ondersteuning voor eventuele oude mailformulieren
+  document.querySelectorAll('[data-mail-form]').forEach(form => {
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+
+      if (!form.reportValidity()) return;
+
+      const data = new FormData(form);
+      const lines = [
+        'Nieuwe aanvraag via LJ Studio',
+        '',
+        ...Array.from(data.entries(), ([key, value]) =>
+          key + ': ' + String(value).trim()
+        )
+      ];
+
+      const url =
+        'mailto:info@ljstudio.nl?subject=' +
+        encodeURIComponent(
+          'LJ Studio aanvraag - ' +
+          (data.get('onderwerp') || 'Website')
+        ) +
+        '&body=' +
+        encodeURIComponent(lines.join('\n'));
+
+      const status = form.querySelector('.form-status');
+
+      if (status) {
+        status.textContent =
+          'Je e-mailprogramma wordt geopend. Verstuur de e-mail zelf om de aanvraag te verzenden.';
+      }
+
+      window.location.href = url;
+    });
+  });
+
+  // Gouden ster: gebruik tekstvariant in plaats van emoji
+  document.querySelectorAll('.page-symbol').forEach(star => {
+    star.textContent = '\u2733\uFE0E';
+  });
+})();

@@ -144,3 +144,58 @@ font-variant-emoji: text;
   .header a.logo { width: 91px; height: 61px; }
   .footer-brand a.logo { width: 165px; height: 129px; }
 }
+/* LJ Studio — origineel gouden LJ-logo */
+
+.header a.logo,
+.footer-brand a.logo {
+  position: relative;
+  display: inline-block;
+  flex-shrink: 0;
+  background-image: url("lj-monogram-transparant.webp");
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: transparent;
+}
+
+.header a.logo {
+  width: 78px;
+  height: 64px;
+}
+
+.footer-brand a.logo {
+  width: 134px;
+  height: 112px;
+  background-position: left center;
+}
+
+.header a.logo .logo-monogram,
+.header a.logo .logo-word,
+.footer-brand a.logo .logo-monogram,
+.footer-brand a.logo .logo-word {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+}
+
+@media (max-width: 920px) {
+  .header a.logo {
+    width: 68px;
+    height: 56px;
+  }
+}
+
+@media (max-width: 600px) {
+  .header a.logo {
+    width: 60px;
+    height: 50px;
+  }
+
+  .footer-brand a.logo {
+    width: 112px;
+    height: 94px;
+  }
+}

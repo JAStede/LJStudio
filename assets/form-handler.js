@@ -19,7 +19,10 @@
         if (!response.ok || result.success === false || result.success === 'false') {
           throw new Error('De aanvraag kon niet worden verwerkt.');
         }
-        if (status) status.textContent = 'Bedankt! Je aanvraag is verzonden. We nemen zo snel mogelijk contact met je op.';
+        if (status) {
+  status.textContent =
+    'Bedankt voor je aanvraag! We hebben je bericht ontvangen en nemen zo snel mogelijk persoonlijk contact met je op. — Team LJ Studio';
+}
         form.reset();
       } catch (error) {
         if (status) status.textContent = 'Verzenden is niet gelukt. Probeer het opnieuw of mail naar info@ljstudio.nl.';

@@ -196,3 +196,36 @@
     });
   });
 })();
+
+/* LJ Studio - SVG pijlen bij de vier processtappen */
+(() => {
+  document.querySelectorAll('.step-arrow').forEach(element => {
+    if (!element.textContent.includes('↗')) return;
+
+    const svg = document.createElementNS(
+      'http://www.w3.org/2000/svg', 'svg'
+    );
+
+    svg.setAttribute('viewBox', '0 0 24 24');
+    svg.setAttribute('width', '1em');
+    svg.setAttribute('height', '1em');
+    svg.setAttribute('fill', 'none');
+    svg.setAttribute('stroke', 'currentColor');
+    svg.setAttribute('stroke-width', '2');
+    svg.setAttribute('stroke-linecap', 'round');
+    svg.setAttribute('stroke-linejoin', 'round');
+    svg.setAttribute('aria-hidden', 'true');
+
+    svg.style.display = 'inline-block';
+    svg.style.verticalAlign = '-0.12em';
+
+    const path = document.createElementNS(
+      'http://www.w3.org/2000/svg', 'path'
+    );
+
+    path.setAttribute('d', 'M7 17 17 7 M8 7h9v9');
+    svg.appendChild(path);
+
+    element.replaceChildren(svg);
+  });
+})();

@@ -81,3 +81,10 @@
   transform: rotate(-15deg);
   box-shadow: 0 12px 30px rgba(0,0,0,.18);
 }
+/* LJ Studio - consistente gouden ster */
+.page-symbol {
+  font-family: Arial, sans-serif;
+  color: #d5aa58;
+  opacity: 0.12;
+  animation: lj-symbol-turn 38s linear infinite;
+}

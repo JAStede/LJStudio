@@ -89,3 +89,19 @@
   animation: lj-symbol-turn 38s linear infinite;
 }
 font-variant-emoji: text;
+/* LJ Studio - pijltjes als tekst, niet als emoji */
+@font-face {
+  font-family: "LJ Symbols";
+  src: local("Arial");
+}
+
+.btn,
+.header-cta,
+.footer-cta,
+.topbar a,
+.nav a,
+.social-row a,
+.mock-btn,
+.nav-mobile-cta {
+  font-variant-emoji: text;
+}

@@ -56,3 +56,28 @@
   transform: rotate(-15deg);
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
 }
+/* DEFINITIEVE LAAGVOLGORDE - LJ STUDIO */
+
+.split-art {
+  position: relative !important;
+  isolation: isolate;
+  overflow: visible !important;
+}
+
+.split-art .shape-disc {
+  z-index: 0;
+}
+
+.split-art .shape-frame {
+  position: relative !important;
+  z-index: 1 !important;
+}
+
+.split-art .shape-badge {
+  position: absolute !important;
+  z-index: 10 !important;
+  right: -5px;
+  bottom: 0;
+  transform: rotate(-15deg);
+  box-shadow: 0 12px 30px rgba(0,0,0,.18);
+}

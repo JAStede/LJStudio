@@ -35,3 +35,24 @@
 /* De gouden IMPACT-badge blijft vóór het donkere ontwerp. */
 .shape-badge{z-index:3;box-shadow:0 16px 35px rgba(0,0,0,.12)}
 @media(prefers-reduced-motion:reduce){.page-symbol{animation:none!important;will-change:auto}.process-heading h2 .process-line{opacity:1;transform:none;transition:none}.process-steps .step{transition:none}}
+/* LJ STUDIO - FIX GELE IMPACT CIRKEL */
+
+.split-art {
+  position: relative;
+  isolation: isolate;
+  overflow: visible;
+}
+
+.split-art .shape-frame {
+  position: relative;
+  z-index: 1;
+}
+
+.split-art .shape-badge {
+  position: absolute;
+  z-index: 9999 !important;
+  right: -5px;
+  bottom: 0;
+  transform: rotate(-15deg);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}

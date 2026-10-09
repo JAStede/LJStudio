@@ -2,3 +2,20 @@
 document.querySelectorAll('.page-symbol').forEach(star => {
   star.textContent = '\u2733\uFE0E';
 });
+/* LJ Studio - consistente pijltjes op alle apparaten */
+document.querySelectorAll('body *').forEach(element => {
+  for (const node of element.childNodes) {
+    if (node.nodeType === Node.TEXT_NODE && node.textContent.includes('↗')) {
+      node.textContent = node.textContent.replaceAll('↗', '\u2197\uFE0E');
+    }
+  }
+});
+/* LJ Studio - voorkom emojiweergave van pijltjes */
+.btn,
+.header-cta,
+.footer-cta,
+.topbar a,
+.nav a,
+.social-row a {
+  font-variant-emoji: text;
+}

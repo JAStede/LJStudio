@@ -349,3 +349,43 @@
   if (state === 'accepted') loadAnalytics();
   else if (state === null) show();
 })();
+
+
+/* LJ Studio: subtiele terug-naar-boven knop met scrollvoortgang. */
+(() => {
+  'use strict';
+  const init = () => {
+    if (document.querySelector('.lj-scroll-top')) return;
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'lj-scroll-top';
+    button.setAttribute('aria-label', 'Terug naar boven');
+    button.setAttribute('title', 'Terug naar boven');
+    button.innerHTML = '<svg class="lj-scroll-ring" viewBox="0 0 60 60" aria-hidden="true"><circle class="lj-scroll-track" cx="30" cy="30" r="26"/><circle class="lj-scroll-progress" cx="30" cy="30" r="26"/></svg><span class="lj-scroll-mark" aria-hidden="true"></span>';
+    document.body.appendChild(button);
+    const circle = button.querySelector('.lj-scroll-progress');
+    const length = 2 * Math.PI * 26;
+    circle.style.strokeDasharray = String(length);
+    const update = () => {
+      const max = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+      const ratio = max ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+      circle.style.strokeDashoffset = String(length * (1 - ratio));
+      button.classList.toggle('is-visible', window.scrollY > 180 && max > 0);
+      button.style.setProperty('--lj-mark-opacity', String(0.35 + ratio * 0.65));
+    };
+    let pending = false;
+    window.addEventListener('scroll', () => {
+      if (pending) return;
+      pending = true;
+      requestAnimationFrame(() => { pending = false; update(); });
+    }, { passive: true });
+    window.addEventListener('resize', update, { passive: true });
+    button.addEventListener('click', () => {
+      const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({ top: 0, behavior: reduced ? 'instant' : 'smooth' });
+    });
+    update();
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init, { once: true });
+  else init();
+})();

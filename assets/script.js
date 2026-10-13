@@ -323,7 +323,7 @@
   panel.className = 'lj-cookie-panel';
   panel.setAttribute('role', 'dialog');
   panel.setAttribute('aria-label', 'Cookievoorkeuren');
-  panel.innerHTML = '<h2>Jouw privacy, jouw keuze.</h2><p>Wij gebruiken noodzakelijke technieken voor de website. Alleen met jouw toestemming laden we Google Analytics om te zien welke pagina’s worden bezocht. We gebruiken geen advertentiecookies. Je kunt je keuze altijd wijzigen. Lees onze <a href="/privacyverklaring.html">privacyverklaring</a>.</p><div class="lj-cookie-actions"><button type="button" data-reject>Alleen noodzakelijk</button><button type="button" data-accept>Analytics toestaan</button></div>';
+  panel.innerHTML = '<h2>Jouw privacy, jouw keuze.</h2><p>Wij gebruiken noodzakelijke technieken voor de website. Alleen met jouw toestemming laden we Google Analytics om te zien welke pagina’s worden bezocht. We gebruiken geen advertentiecookies. Je kunt je keuze altijd wijzigen. Lees onze <a href="/privacyverklaring.html">privacyverklaring</a>.</p><div class="lj-cookie-actions"><button type="button" data-reject>Alleen noodzakelijk</button><button type="button" data-accept>Alles toestaan</button></div>';
   panel.hidden = true;
   document.body.appendChild(panel);
   const show = () => { panel.hidden = false; };

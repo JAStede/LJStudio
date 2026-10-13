@@ -199,3 +199,27 @@ font-variant-emoji: text;
     height: 94px;
   }
 }
+
+
+/* Portfolio: projectstatus en drie projecten */
+.portfolio-section-heading{margin:0 0 26px}
+.portfolio-section-heading h2{display:flex;flex-wrap:wrap;align-items:baseline;gap:12px;margin:12px 0;font-size:clamp(29px,4vw,46px)}
+.portfolio-section-heading p{max-width:720px;color:#6e6960;font-size:14px;line-height:1.7}
+.portfolio-count{font:700 11px/1.5 "DM Sans",sans-serif;letter-spacing:.03em;color:#92703c}
+.portfolio-project-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.portfolio-project-grid .work-art{height:290px}
+.portfolio-project-grid .work-browser{width:88%;height:215px}
+.portfolio-project-grid .work-browser-bar{font-size:7px;padding:0 10px;gap:8px}
+.portfolio-project-grid .work-browser-content{padding:20px}
+.portfolio-project-grid .work-browser-content strong{font-size:clamp(19px,2.2vw,27px)}
+.portfolio-project-grid .work-info{padding:22px}
+.portfolio-project-grid .work-info h3{font-size:20px;overflow-wrap:anywhere}
+.portfolio-art-asbest{background:linear-gradient(145deg,#172d34,#355962 55%,#111c23);color:#fff}
+.portfolio-art-dejongh{background:linear-gradient(145deg,#322e24,#8a785d 60%,#3c4936);color:#fff}
+.portfolio-art-content{display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;gap:18px;width:84%;min-height:195px;padding:25px 18px;border:1px solid #ffffff50;background:#ffffff0b;box-shadow:0 20px 50px #0003}
+.portfolio-art-content>span{font:700 10px/1.4 "DM Sans",sans-serif;letter-spacing:.14em;color:#f0dfc0}
+.portfolio-art-content strong{font:800 clamp(22px,3vw,37px)/1.12 Manrope,sans-serif;letter-spacing:-.045em;overflow-wrap:anywhere}
+.portfolio-art-content small{font:500 12px/1.5 "DM Sans",sans-serif;color:#f3eee4}
+.portfolio-completed{margin-top:70px;padding-top:35px;border-top:1px solid #d9d1c5}
+@media(max-width:900px){.portfolio-project-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){.portfolio-project-grid{grid-template-columns:minmax(0,1fr)}.portfolio-project-grid .work-art{height:300px}.portfolio-project-grid .work-browser-content strong{font-size:27px}.portfolio-art-content strong{font-size:34px}}

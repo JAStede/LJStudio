@@ -223,3 +223,6 @@ font-variant-emoji: text;
 .portfolio-completed{margin-top:70px;padding-top:35px;border-top:1px solid #d9d1c5}
 @media(max-width:900px){.portfolio-project-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:620px){.portfolio-project-grid{grid-template-columns:minmax(0,1fr)}.portfolio-project-grid .work-art{height:300px}.portfolio-project-grid .work-browser-content strong{font-size:27px}.portfolio-art-content strong{font-size:34px}}
+
+/* Acord BV - conceptvisualisatie */
+.portfolio-art-acord{background:linear-gradient(145deg,#101e2a,#314c5d 55%,#10171e);color:#fff}

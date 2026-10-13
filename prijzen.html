@@ -97,7 +97,7 @@
         <span class="plan-label">01 / START</span>
         <h3>Essentieel</h3>
         <p>Een professionele online basis die vertrouwen wekt.</p>
-        <div class="price">€750 <small>eenmalig · excl. btw</small></div>
+        <div class="price"><span class="price-count" data-count-price="750">€750</span> <small>eenmalig · excl. btw</small></div>
         <ul>
           <li>Tot 3 commerciële pagina’s</li>
           <li>Professioneel ontwerp voor mobiel, tablet en desktop</li>
@@ -112,7 +112,7 @@
         <span class="plan-label">02 / GROW</span>
         <h3>Professioneel</h3>
         <p>Meer ruimte voor diensten, inhoud en uitstraling.</p>
-        <div class="price">€1.350 <small>eenmalig · excl. btw</small></div>
+        <div class="price"><span class="price-count" data-count-price="1350">€1.350</span> <small>eenmalig · excl. btw</small></div>
         <ul>
           <li>Tot 6 commerciële pagina’s</li>
           <li>Branchegericht ontwerp en conversiegerichte opbouw</li>
@@ -129,7 +129,7 @@
         <span class="plan-label">03 / SIGNATURE</span>
         <h3>Signature</h3>
         <p>Een onderscheidende digitale ervaring met meer ruimte voor maatwerk.</p>
-        <div class="price">€2.250 <small>eenmalig · excl. btw</small></div>
+        <div class="price"><span class="price-count" data-count-price="2250">€2.250</span> <small>eenmalig · excl. btw</small></div>
         <ul>
           <li>Tot 12 commerciële pagina’s</li>
           <li>Premium maatwerkdesign en verfijnde, mobielvriendelijke animaties</li>
@@ -148,7 +148,7 @@
     <div class="care-strip reveal">
       <div>
         <span class="eyebrow">DOORLOPENDE ZORG</span>
-        <h3>LJ Care <span style="display:inline-flex;align-items:baseline;gap:8px;flex-wrap:nowrap;white-space:nowrap">€39,99 <small style="font-family:inherit;font-size:clamp(15px,1.5vw,18px);font-weight:600;line-height:1.4;letter-spacing:0;color:inherit">/ maand</small></span></h3>
+        <h3>LJ Care <span style="display:inline-flex;align-items:baseline;gap:8px;flex-wrap:nowrap;white-space:nowrap"><span class="price-count" data-count-price="39.99">€39,99</span> <small style="font-family:inherit;font-size:clamp(15px,1.5vw,18px);font-weight:600;line-height:1.4;letter-spacing:0;color:inherit">/ maand</small></span></h3>
         <p style="margin:0 0 8px;font-size:12px;color:#b5aa99">Exclusief 21% btw</p>
         <p>Hostingbeheer en maximaal 30 minuten kleine inhoudelijke wijzigingen per maand. Nieuwe pagina’s, nieuw ontwerp, uitgebreide SEO en externe licenties vallen hier niet onder.</p>
       </div>
@@ -266,5 +266,39 @@
     </div>
   </div>
 </footer>
+
+<script>
+/* Prijzen tellen eenmaal op bij het in beeld komen. Eindprijzen blijven leesbaar zonder JavaScript. */
+(() => {
+  const elements = document.querySelectorAll('[data-count-price]');
+  if (!elements.length || !('IntersectionObserver' in window) ||
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const euro = new Intl.NumberFormat('nl-NL', {style:'currency',currency:'EUR',maximumFractionDigits:2,minimumFractionDigits:0});
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      observer.unobserve(entry.target);
+      const el = entry.target;
+      const target = Number(el.dataset.countPrice);
+      if (!Number.isFinite(target)) return;
+      const decimal = !Number.isInteger(target);
+      const formatter = decimal
+        ? new Intl.NumberFormat('nl-NL',{style:'currency',currency:'EUR',minimumFractionDigits:2,maximumFractionDigits:2})
+        : euro;
+      const duration = 1100;
+      let start;
+      const animate = (time) => {
+        if (start === undefined) start = time;
+        const t = Math.min((time - start) / duration, 1);
+        const eased = 1 - Math.pow(1 - t, 3);
+        el.textContent = formatter.format(t === 1 ? target : (decimal ? Math.round(target * eased * 100) / 100 : Math.round(target * eased)));
+        if (t < 1) requestAnimationFrame(animate);
+      };
+      requestAnimationFrame(animate);
+    });
+  }, {threshold:0.3});
+  elements.forEach((el) => observer.observe(el));
+})();
+</script>
 </body>
 </html>

@@ -48,6 +48,76 @@
 </script>
 
 <script defer="" src="assets/script.js"></script>
+<style>
+/* LJ Studio portfolio 2026 - scoped, mobile-first, no external images */
+.ljp-section{background:radial-gradient(ellipse at 80% 7%,#5a3b171e,transparent 35%),#0b0a09;color:#f6f3ed;padding:95px 0 100px;overflow:hidden}
+.ljp-intro{position:relative;margin-bottom:44px}
+.ljp-eyebrow{display:inline-flex;align-items:center;gap:14px;font:800 11px/1.4 "DM Sans",sans-serif;letter-spacing:.16em;color:#d9ab62}
+.ljp-line{display:inline-block;width:56px;height:1px;background:#bb8c45}
+.ljp-intro h1{font-size:clamp(43px,6.6vw,88px);line-height:1.06;letter-spacing:-.055em;margin:20px 0}
+.ljp-intro h1 em,.ljp-finished h2 em{font-style:normal;color:#e5b76d}
+.ljp-intro>p{max-width:660px;font-size:clamp(15px,1.5vw,18px);line-height:1.75;color:#c8c1b8}
+.ljp-handwritten{position:absolute;right:2%;bottom:16px;color:#e5b76d;font:italic 19px/1.4 Georgia,serif;transform:rotate(-8deg)}
+.ljp-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.ljp-card{min-width:0;background:linear-gradient(140deg,#161410,#0c0b0a);border:1px solid #5e4a315c;border-radius:12px;overflow:hidden;transition:border-color .3s,transform .3s,box-shadow .3s;animation:ljp-arrive .7s both}
+.ljp-card:nth-child(2){animation-delay:.1s}.ljp-card:nth-child(3){animation-delay:.2s}.ljp-card:nth-child(4){animation-delay:.3s}
+.ljp-card:hover{border-color:#c99b55;transform:translateY(-5px);box-shadow:0 24px 60px #0007}
+.ljp-visual{height:clamp(250px,28vw,370px);position:relative;isolation:isolate;overflow:hidden;display:flex;align-items:flex-end;justify-content:center;padding:46px 18px 0}
+.ljp-yvd .ljp-visual{background:radial-gradient(circle at 80% 35%,#386779,#0b2835 62%,#07151b)}
+.ljp-asbest .ljp-visual{background:radial-gradient(circle at 80% 35%,#76512e,#2d241c 55%,#0b0b0c)}
+.ljp-dejongh .ljp-visual{background:radial-gradient(circle at 85% 35%,#59724a,#1e3529 57%,#0d1b14)}
+.ljp-acord .ljp-visual{background:radial-gradient(circle at 80% 35%,#66717b,#25303b 55%,#10161e)}
+.ljp-visual:before{content:"";position:absolute;inset:0;background:linear-gradient(transparent 55%,#0007),repeating-linear-gradient(110deg,transparent 0 75px,#ffffff06 76px 77px);pointer-events:none}
+.ljp-status{position:absolute;top:19px;left:19px;z-index:5;border:1px solid #e6b65c;background:#1c160de6;color:#f0c677;border-radius:30px;padding:8px 12px;display:inline-flex;align-items:center;gap:8px;font:800 10px/1 "DM Sans",sans-serif;letter-spacing:.09em;box-shadow:0 0 20px #e4ad4b24}
+.ljp-status i{width:7px;height:7px;background:#edc274;border-radius:50%;box-shadow:0 0 0 4px #e6b65c22;animation:ljp-pulse 2.6s infinite}
+.ljp-status-planning{color:#e6d4b6}
+.ljp-laptop{width:79%;max-width:490px;position:relative;z-index:2;transform:perspective(800px) rotateY(-5deg) rotateX(2deg) translateY(9px);transform-origin:bottom center;transition:transform .5s}
+.ljp-card:hover .ljp-laptop{transform:perspective(800px) rotateY(0) rotateX(0) translateY(2px)}
+.ljp-screen{height:clamp(185px,21vw,288px);border:7px solid #151719;border-bottom-width:10px;border-radius:11px 11px 3px 3px;overflow:hidden;box-shadow:0 16px 35px #0008;display:flex;flex-direction:column}
+.ljp-browser{height:28px;flex:none;background:#e6e6e4;color:#57646c;display:flex;align-items:center;justify-content:space-between;gap:5px;padding:0 12px;font:700 8px/1 "DM Sans",sans-serif;letter-spacing:.06em;white-space:nowrap;overflow:hidden}
+.ljp-screen-body{flex:1;min-height:0;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:12px;padding:clamp(12px,2.3vw,30px)}
+.ljp-screen-body small{font:800 9px/1.3 "DM Sans",sans-serif;letter-spacing:.12em}
+.ljp-screen-body strong{font:800 clamp(19px,2.7vw,37px)/1.14 Manrope,sans-serif;letter-spacing:-.055em}
+.ljp-screen-btn{display:inline-block;padding:10px 13px;border-radius:3px;font:800 9px/1.2 "DM Sans",sans-serif}
+.ljp-screen-yvd .ljp-screen-body{background:linear-gradient(120deg,#dbe9ec,#a6c5cf);color:#153e4d}
+.ljp-screen-yvd .ljp-screen-btn{background:#12495f;color:white}
+.ljp-screen-asbest .ljp-browser,.ljp-screen-dejongh .ljp-browser,.ljp-screen-acord .ljp-browser{background:#101215;color:#ddd1ba}
+.ljp-screen-asbest .ljp-screen-body{background:linear-gradient(105deg,#121517 18%,#354146);color:white}
+.ljp-screen-dejongh .ljp-screen-body{background:linear-gradient(110deg,#16251c,#527049);color:#fff}
+.ljp-screen-acord .ljp-screen-body{background:linear-gradient(110deg,#101821,#394b5b);color:#fff}
+.ljp-screen-asbest .ljp-screen-btn,.ljp-screen-dejongh .ljp-screen-btn,.ljp-screen-acord .ljp-screen-btn{background:#e7b960;color:#15110b}
+.ljp-base{height:11px;margin:0 -7%;border-radius:3px 3px 50% 50%;background:linear-gradient(#b8b9b7,#454749 50%,#141617);box-shadow:0 9px 10px #0009}
+.ljp-phone{position:absolute;z-index:3;bottom:9px;right:7%;width:22%;max-width:110px;height:53%;max-height:235px;border:5px solid #121415;border-radius:17px;background:#132b34;color:#fff;box-shadow:0 10px 30px #000b;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:11px;padding:15px 8px;overflow:hidden}
+.ljp-phone-notch{position:absolute;top:4px;left:35%;width:30%;height:5px;border-radius:8px;background:#000}
+.ljp-phone small{font:800 8px/1.3 "DM Sans",sans-serif;color:#e5b96d}
+.ljp-phone strong{font:800 clamp(10px,1.4vw,17px)/1.15 Manrope,sans-serif;letter-spacing:-.03em}
+.ljp-phone>span{font:700 8px/1.3 "DM Sans",sans-serif;color:#e9c57c}
+.ljp-phone-yvd{background:linear-gradient(#d5e7ec,#7ca9b6);color:#163f4d}.ljp-phone-yvd small,.ljp-phone-yvd>span{color:#15506a}
+.ljp-phone-asbest{background:linear-gradient(#252c30,#0b1013)}
+.ljp-phone-dejongh{background:linear-gradient(#41603c,#13231a)}
+.ljp-phone-acord{background:linear-gradient(#384b5c,#0c141e)}
+.ljp-details{padding:24px 26px 22px}
+.ljp-type{font:800 10px/1.3 "DM Sans",sans-serif;letter-spacing:.13em;color:#e0b36e}
+.ljp-details h2{font-size:clamp(20px,2vw,26px);letter-spacing:-.03em;line-height:1.3;margin:9px 0}
+.ljp-details p{font-size:14px;line-height:1.7;color:#c7c0b7;min-height:48px;margin:0 0 18px}
+.ljp-tags{display:flex;flex-wrap:wrap;gap:7px}
+.ljp-tags span{border:1px solid #736758;padding:6px 10px;border-radius:15px;font:600 11px/1.3 "DM Sans",sans-serif;color:#e6dfd4}
+.ljp-phase{border-top:1px solid #40382f;margin-top:20px;padding-top:16px;display:flex;align-items:center;justify-content:space-between;gap:10px;color:#cbbca5;font:700 10px/1.4 "DM Sans",sans-serif;text-transform:uppercase;letter-spacing:.1em}
+.ljp-phase-dot{width:9px;height:9px;flex:none;border-radius:50%;background:#d9a75e;box-shadow:0 0 0 5px #d9a75e1c}
+.ljp-disclaimer{margin:17px 0 0;color:#a9a095;font-size:11px;line-height:1.6}
+.ljp-finished{margin-top:90px;padding-top:34px;border-top:1px solid #69503260}
+.ljp-finished h2{font-size:clamp(37px,5vw,64px);letter-spacing:-.05em;margin:17px 0 10px}
+.ljp-finished>p{max-width:650px;color:#c8c1b8;font-size:15px;line-height:1.7}
+.ljp-empty{border:1px dashed #866c486e;border-radius:11px;background:radial-gradient(ellipse at 50% 0,#a7773217,transparent 65%);min-height:160px;margin-top:25px;padding:28px;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;gap:10px}
+.ljp-empty-icon{font-size:30px;color:#d5a961}.ljp-empty strong{font-size:16px}.ljp-empty>span:last-child{color:#a9a095;font-size:12px}
+.ljp-end{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;margin-top:40px}.ljp-end p{color:#c8c1b8}
+@keyframes ljp-arrive{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes ljp-pulse{50%{box-shadow:0 0 0 7px #e6b65c10}}
+@media(max-width:960px){.ljp-handwritten{display:none}.ljp-visual{height:290px}.ljp-screen{height:210px}.ljp-screen-body strong{font-size:24px}.ljp-phone strong{font-size:12px}}
+@media(max-width:720px){.ljp-section{padding:65px 0 75px}.ljp-grid{grid-template-columns:minmax(0,1fr);gap:20px}.ljp-visual{height:330px}.ljp-screen{height:250px}.ljp-screen-body strong{font-size:clamp(23px,5vw,35px)}.ljp-phone strong{font-size:15px}.ljp-intro{margin-bottom:30px}.ljp-finished{margin-top:65px}}
+@media(max-width:400px){.ljp-visual{height:265px}.ljp-screen{height:190px}.ljp-screen-body strong{font-size:21px}.ljp-phone{right:4%;height:51%;padding:10px 6px}.ljp-phone strong{font-size:11px}.ljp-details{padding:21px}.ljp-screen-body{gap:8px}.ljp-screen-btn{padding:7px;font-size:8px}}
+@media(prefers-reduced-motion:reduce){.ljp-card,.ljp-status i{animation:none}.ljp-card,.ljp-laptop{transition:none}}
+</style>
 </head>
 
 <body>
@@ -90,69 +160,71 @@
 
 <main id="main">
 
-<section class="page-hero">
-  <div class="container page-hero-inner">
-    <div>
-      <span class="eyebrow">SELECTED WORK / PORTFOLIO</span>
-      <h1>Werk met<br/><em>karakter.</em></h1>
-      <p class="page-lead">Volg onze websiteprojecten van eerste ontwerp tot oplevering. Bekijk wat in ontwikkeling is en ontdek straks onze afgeronde projecten.</p>
-    </div>
-    <div aria-hidden="true" class="page-symbol">✳︎</div>
-  </div>
-</section>
-
-<section class="section section-cream">
+<section class="ljp-section" aria-labelledby="ljp-title">
   <div class="container">
-
-    <div class="portfolio-section-heading">
-      <span class="eyebrow">ACTUELE PROJECTEN</span>
-      <h2>In de maak<span class="portfolio-count">04 projecten</span></h2>
-      <p>Een kijkje achter de schermen bij websites die in ontwikkeling of voorbereiding zijn. De voorbeelden zijn ontwerpvisualisaties; de definitieve websites kunnen nog veranderen.</p>
+    <div class="ljp-intro">
+      <span class="ljp-eyebrow">ONZE PROJECTEN <span class="ljp-line"></span> 2026</span>
+      <h1 id="ljp-title">Projecten <em>in de maak.</em></h1>
+      <p>Van het eerste idee tot een sterke online uitstraling. Ontdek waar we momenteel aan werken en volg onze projecten richting oplevering.</p>
+      <span class="ljp-handwritten" aria-hidden="true">Van idee naar online resultaat ↘</span>
     </div>
-
-    <div class="work-grid portfolio-project-grid">
-      <article class="work-card">
-        <div class="work-art work-art-yvd">
-          <div class="work-browser">
-            <div class="work-browser-bar"><span>● ● ●</span><span>YVD BERGH / KLIMAATTECHNIEK</span></div>
-            <div class="work-browser-content"><small>KLIMAAT &amp; COMFORT</small><strong>Comfort begint<br/>bij vakmanschap.</strong><span class="mock-btn">WEBSITE IN ONTWIKKELING</span></div>
+    <div class="ljp-grid">
+      <article class="ljp-card ljp-yvd">
+        <div class="ljp-visual">
+          <span class="ljp-status"><i></i> IN ONTWIKKELING</span>
+          <div class="ljp-laptop">
+            <div class="ljp-screen ljp-screen-yvd">
+              <div class="ljp-browser"><span>● ● ●</span><span>YVD BERGH · KLIMAATTECHNIEK</span></div>
+              <div class="ljp-screen-body"><small>KLIMAAT &amp; COMFORT</small><strong>Comfort begint<br>bij vakmanschap.</strong><span class="ljp-screen-btn">Onze diensten <span aria-hidden="true">→</span></span></div>
+            </div>
+            <div class="ljp-base"></div>
           </div>
+          <div class="ljp-phone ljp-phone-yvd"><div class="ljp-phone-notch"></div><small>YVD BERGH</small><strong>Comfort.<br>In elk seizoen.</strong><span>Ontdek meer →</span></div>
         </div>
-        <div class="work-info"><div><span class="micro">IN ONTWIKKELING</span><h3>YVD Bergh Klimaattechniek</h3><p>Een professionele online presentatie voor klimaattechniek.</p></div></div>
+        <div class="ljp-details"><span class="ljp-type">01 / KLIMAATTECHNIEK</span><h2>YVD Bergh Klimaattechniek</h2><p>Een frisse, professionele online uitstraling waarin comfort en vakmanschap centraal staan.</p><div class="ljp-tags"><span>Webdesign</span><span>Responsive</span><span>SEO-basis</span></div><div class="ljp-phase"><span>Ontwerp &amp; ontwikkeling</span><span class="ljp-phase-dot" aria-hidden="true"></span></div></div>
       </article>
-
-      <article class="work-card">
-        <div class="work-art portfolio-art-asbest">
-          <div class="portfolio-art-content"><span>WEBSITE IN ONTWIKKELING</span><strong>ASBEST<br/>PROFESSIONALS</strong><small>Een heldere presentatie van diensten en expertise.</small></div>
+      <article class="ljp-card ljp-asbest">
+        <div class="ljp-visual">
+          <span class="ljp-status"><i></i> IN ONTWIKKELING</span>
+          <div class="ljp-laptop"><div class="ljp-screen ljp-screen-asbest">
+            <div class="ljp-browser"><span>● ● ●</span><span>ASBEST PROFESSIONALS</span></div>
+            <div class="ljp-screen-body"><small>VEILIGHEID &amp; VAKKENNIS</small><strong>Veilig.<br>Vakkundig.<br>Zorgeloos.</strong><span class="ljp-screen-btn">Bekijk onze diensten →</span></div>
+          </div><div class="ljp-base"></div></div>
+          <div class="ljp-phone ljp-phone-asbest"><div class="ljp-phone-notch"></div><small>ASBEST PROFESSIONALS</small><strong>Veilig.<br>Vakkundig.</strong><span>Meer informatie →</span></div>
         </div>
-        <div class="work-info"><div><span class="micro">IN ONTWIKKELING</span><h3>Asbest Professionals</h3><p>Websiteproject in ontwikkeling; ontwerp en inhoud worden nog afgerond.</p></div></div>
+        <div class="ljp-details"><span class="ljp-type">02 / ASBESTDIENSTVERLENING</span><h2>Asbest Professionals</h2><p>Een duidelijke en betrouwbare presentatie waarin deskundigheid en overzicht vooropstaan.</p><div class="ljp-tags"><span>Webdesign</span><span>Responsive</span><span>Contact</span></div><div class="ljp-phase"><span>Ontwerp &amp; ontwikkeling</span><span class="ljp-phase-dot" aria-hidden="true"></span></div></div>
       </article>
-
-      <article class="work-card">
-        <div class="work-art portfolio-art-dejongh">
-          <div class="portfolio-art-content"><span>WEBSITE IN ONTWIKKELING</span><strong>DE JONGH</strong><small>Renovatie, tuin- en buitenwerk.</small></div>
+      <article class="ljp-card ljp-dejongh">
+        <div class="ljp-visual">
+          <span class="ljp-status"><i></i> IN ONTWIKKELING</span>
+          <div class="ljp-laptop"><div class="ljp-screen ljp-screen-dejongh">
+            <div class="ljp-browser"><span>● ● ●</span><span>DE JONGH · RENOVATIE &amp; BUITENWERK</span></div>
+            <div class="ljp-screen-body"><small>VAN IDEE TOT REALISATIE</small><strong>Buitenruimte<br>met karakter.</strong><span class="ljp-screen-btn">Bekijk projecten →</span></div>
+          </div><div class="ljp-base"></div></div>
+          <div class="ljp-phone ljp-phone-dejongh"><div class="ljp-phone-notch"></div><small>DE JONGH</small><strong>Mooi werk.<br>Binnen &amp; buiten.</strong><span>Projecten →</span></div>
         </div>
-        <div class="work-info"><div><span class="micro">IN ONTWIKKELING</span><h3>De Jongh</h3><p>Een website voor renovatie en buitenwerk, met ruimte voor toekomstige projectfoto’s.</p></div></div>
+        <div class="ljp-details"><span class="ljp-type">03 / RENOVATIE &amp; BUITENWERK</span><h2>De Jongh</h2><p>Een stijlvolle website voor renovatie, tuin- en buitenwerk, met ruimte om projecten te laten spreken.</p><div class="ljp-tags"><span>Webdesign</span><span>Responsive</span><span>Projecten</span></div><div class="ljp-phase"><span>Ontwerp &amp; ontwikkeling</span><span class="ljp-phase-dot" aria-hidden="true"></span></div></div>
       </article>
-      <article class="work-card">
-        <div class="work-art portfolio-art-acord">
-          <div class="portfolio-art-content"><span>PROJECT IN VOORBEREIDING</span><strong>ACORD BV</strong><small>Een digitale presentatie voor een infrabedrijf.</small></div>
+      <article class="ljp-card ljp-acord">
+        <div class="ljp-visual">
+          <span class="ljp-status ljp-status-planning"><i></i> IN VOORBEREIDING</span>
+          <div class="ljp-laptop"><div class="ljp-screen ljp-screen-acord">
+            <div class="ljp-browser"><span>● ● ●</span><span>ACORD BV · INFRASTRUCTUUR</span></div>
+            <div class="ljp-screen-body"><small>KABELS · LEIDINGEN · INFRA</small><strong>Infra.<br>Verbinding.<br>Vooruitgang.</strong><span class="ljp-screen-btn">Ontdek ons werk →</span></div>
+          </div><div class="ljp-base"></div></div>
+          <div class="ljp-phone ljp-phone-acord"><div class="ljp-phone-notch"></div><small>ACORD BV</small><strong>Verbinding.<br>Vooruitgang.</strong><span>Onze diensten →</span></div>
         </div>
-        <div class="work-info"><div><span class="micro">IN VOORBEREIDING</span><h3>Acord BV</h3><p>Websiteconcept in voorbereiding. De definitieve invulling wordt nog afgestemd.</p></div></div>
+        <div class="ljp-details"><span class="ljp-type">04 / INFRASTRUCTUUR</span><h2>Acord BV</h2><p>Een websiteconcept in voorbereiding voor een bedrijf actief in kabels, leidingen en infrastructuur.</p><div class="ljp-tags"><span>Websiteconcept</span><span>Responsive</span><span>Presentatie</span></div><div class="ljp-phase"><span>Planning &amp; concept</span><span class="ljp-phase-dot" aria-hidden="true"></span></div></div>
       </article>
     </div>
-
-    <div class="portfolio-section-heading portfolio-completed">
-      <span class="eyebrow">OPGELEVERD WERK</span>
-      <h2>Afgeronde projecten<span class="portfolio-count">Nog geen projecten gepubliceerd</span></h2>
-      <p>Zodra projecten zijn afgerond en geschikt zijn voor publicatie, vind je ze hier terug.</p>
+    <p class="ljp-disclaimer">De getoonde schermen zijn ontwerpvisualisaties en geen screenshots van definitief opgeleverde websites.</p>
+    <div class="ljp-finished">
+      <span class="ljp-eyebrow">VOLGENDE STAP <span class="ljp-line"></span> OPGELEVERD WERK</span>
+      <h2>Afgeronde <em>projecten.</em></h2>
+      <p>Zodra een website is opgeleverd, krijgt deze hier een plek met echte screenshots en een link naar de live website.</p>
+      <div class="ljp-empty"><span class="ljp-empty-icon" aria-hidden="true">✦</span><strong>Hier verschijnen binnenkort onze afgeronde projecten</strong><span>Van eerste ontwerp tot live website — binnenkort meer.</span></div>
     </div>
-
-    <div class="section-footer">
-      <p>Wij tonen bewust geen fictieve reviews, klantlogo’s of resultaten.</p>
-      <a class="btn btn-gold" href="aanvraag.html">Start jouw project ↗</a>
-    </div>
-
+    <div class="ljp-end"><p>Ook plannen voor een nieuwe website?</p><a class="btn btn-gold" href="aanvraag.html">Start jouw project <span aria-hidden="true">↗</span></a></div>
   </div>
 </section>
 

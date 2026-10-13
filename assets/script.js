@@ -288,3 +288,64 @@
     });
   });
 })();
+
+
+/* Gratis cookiebeheer LJ Studio: GA4 laadt uitsluitend na expliciete toestemming. */
+(() => {
+  'use strict';
+  const STORAGE_KEY = 'ljstudio_analytics_consent_v1';
+  const MEASUREMENT_ID = 'G-YC8VL5WH6Q';
+  const readConsent = () => {
+    try { const v = localStorage.getItem(STORAGE_KEY); return v === 'accepted' || v === 'rejected' ? v : null; }
+    catch (_) { return null; }
+  };
+  const writeConsent = value => {
+    try { localStorage.setItem(STORAGE_KEY, value); } catch (_) { /* Privacy-instellingen blijven in deze sessie actief. */ }
+  };
+  let state = readConsent();
+  let analyticsLoaded = false;
+  const loadAnalytics = () => {
+    if (analyticsLoaded || state !== 'accepted') return;
+    analyticsLoaded = true;
+    window.dataLayer = window.dataLayer || [];
+    window.gtag = function () { window.dataLayer.push(arguments); };
+    window.gtag('js', new Date());
+    window.gtag('config', MEASUREMENT_ID, { anonymize_ip: true });
+    const tag = document.createElement('script');
+    tag.async = true;
+    tag.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(MEASUREMENT_ID);
+    document.head.appendChild(tag);
+  };
+  const css = document.createElement('style');
+  css.textContent = '.lj-cookie-panel{position:fixed;bottom:16px;left:16px;right:16px;z-index:2147483646;max-width:650px;margin:auto;padding:23px;background:#15120e;color:#f8f2e8;border:1px solid #b88b4b;border-radius:12px;box-shadow:0 15px 55px #0009;font-family:inherit}.lj-cookie-panel h2{font-size:19px;line-height:1.35;margin:0 0 9px;color:#f4e5cd}.lj-cookie-panel p{font-size:13px;line-height:1.65;margin:0 0 15px;color:#e0d1ba}.lj-cookie-panel a{color:#eac58a;text-decoration:underline}.lj-cookie-actions{display:flex;gap:9px;flex-wrap:wrap}.lj-cookie-actions button{flex:1 1 160px;min-height:43px;border-radius:6px;border:1px solid #a98854;background:#282117;color:#fff;padding:9px 12px;cursor:pointer;font:inherit;font-size:13px;font-weight:700}.lj-cookie-actions button[data-accept]{background:#d6a65d;border-color:#d6a65d;color:#15100a}.lj-cookie-actions button:focus-visible,.lj-cookie-settings:focus-visible{outline:3px solid #e9b66a;outline-offset:3px}.lj-cookie-settings{background:none;border:0;color:inherit;text-decoration:underline;cursor:pointer;font:inherit;font-size:12px;margin-top:8px}.lj-cookie-panel[hidden]{display:none!important}@media(max-width:480px){.lj-cookie-panel{bottom:8px;left:8px;right:8px;padding:16px}.lj-cookie-actions button{flex-basis:100%}}';
+  document.head.appendChild(css);
+  const panel = document.createElement('section');
+  panel.className = 'lj-cookie-panel';
+  panel.setAttribute('role', 'dialog');
+  panel.setAttribute('aria-label', 'Cookievoorkeuren');
+  panel.innerHTML = '<h2>Jouw privacy, jouw keuze.</h2><p>Wij gebruiken noodzakelijke technieken voor de website. Alleen met jouw toestemming laden we Google Analytics om te zien welke pagina’s worden bezocht. We gebruiken geen advertentiecookies. Je kunt je keuze altijd wijzigen. Lees onze <a href="/privacyverklaring.html">privacyverklaring</a>.</p><div class="lj-cookie-actions"><button type="button" data-reject>Alleen noodzakelijk</button><button type="button" data-accept>Analytics toestaan</button></div>';
+  panel.hidden = true;
+  document.body.appendChild(panel);
+  const show = () => { panel.hidden = false; };
+  const hide = () => { panel.hidden = true; };
+  const decide = value => {
+    const old = state;
+    state = value;
+    writeConsent(value);
+    hide();
+    if (value === 'accepted') loadAnalytics();
+    // Na intrekken: herladen verwijdert de GA4-runtime; er worden geen nieuwe hits verstuurd.
+    if (old === 'accepted' && value === 'rejected') location.reload();
+  };
+  panel.querySelector('[data-reject]').addEventListener('click', () => decide('rejected'));
+  panel.querySelector('[data-accept]').addEventListener('click', () => decide('accepted'));
+  const footer = document.querySelector('footer') || document.body;
+  const settings = document.createElement('button');
+  settings.type = 'button';
+  settings.className = 'lj-cookie-settings';
+  settings.textContent = 'Cookie-instellingen';
+  settings.addEventListener('click', show);
+  footer.appendChild(settings);
+  if (state === 'accepted') loadAnalytics();
+  else if (state === null) show();
+})();

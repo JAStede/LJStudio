@@ -151,6 +151,7 @@
       <div class="lj-builder-actions">
         <button class="btn btn-outline" type="button" id="lj-builder-back" hidden>← Vorige stap</button>
         <button class="btn btn-dark" type="button" id="lj-builder-next">Extra opties kiezen ↗</button>
+        <button class="btn btn-outline" type="button" id="lj-builder-skip" hidden>Geen extra opties — verder naar contactgegevens ↗</button>
       </div>
       <p class="lj-builder-note">Vrijblijvende prijsindicatie, exclusief 21% btw en eventuele externe of terugkerende kosten. De definitieve prijs en werkzaamheden bevestigen we in een offerte. Een demo betreft uitsluitend de homepage.</p>
     </div>
@@ -319,7 +320,7 @@
 (() => {
   const root=document.getElementById('lj-builder');if(!root)return;
   const packages=root.querySelector('#lj-builder-packages'),extras=root.querySelector('#lj-builder-extras');
-  const contact=document.getElementById('lj-contact-stage'),back=root.querySelector('#lj-builder-back'),next=root.querySelector('#lj-builder-next');
+  const contact=document.getElementById('lj-contact-stage'),back=root.querySelector('#lj-builder-back'),next=root.querySelector('#lj-builder-next'),skip=root.querySelector('#lj-builder-skip');
   const radios=[...root.querySelectorAll('[name="lj_package"]')],options=[...root.querySelectorAll('[name="lj_extra"],[name="lj_care"]')];
   const money=n=>new Intl.NumberFormat('nl-NL',{style:'currency',currency:'EUR',minimumFractionDigits:Number.isInteger(n)?0:2,maximumFractionDigits:2}).format(n);
   let step=1;
@@ -347,7 +348,7 @@
   }
   function render(){
     packages.hidden=step!==1;extras.hidden=step!==2;contact.hidden=step!==3;
-    back.hidden=step===1;next.hidden=step===3;
+    back.hidden=step===1;next.hidden=step===3;skip.hidden=step!==2;
     root.querySelector('#lj-builder-step').textContent='Stap '+step+' van 3 — '+(['','Kies je website','Extra opties','Contactgegevens'][step]);
     next.textContent=step===1?'Extra opties kiezen ↗':'Verder naar contactgegevens ↗';
     root.hidden=step===3;
@@ -356,6 +357,7 @@
   radios.forEach(r=>r.addEventListener('change',update));options.forEach(o=>o.addEventListener('change',update));
   next.addEventListener('click',()=>{if(step===1&&!chosen()){radios[0].focus();alert('Kies eerst een websitepakket.');return;}step=Math.min(3,step+1);update();render();});
   back.addEventListener('click',()=>{step=Math.max(1,step-1);render();});
+  skip.addEventListener('click',()=>{options.forEach(o=>o.checked=false);step=3;update();render();});
   const params=new URLSearchParams(location.search),requested=params.get('pakket');
   if(requested){const r=radios.find(x=>x.value.toLowerCase()===requested.toLowerCase());if(r)r.checked=true;}
   update();

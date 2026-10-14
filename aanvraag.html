@@ -157,6 +157,7 @@
         <div class="lj-builder-total"><span>Indicatie eenmalig</span><span id="lj-builder-total">€0</span></div>
         <p id="lj-builder-recurring" style="color:#ead8bf;font-size:13px;margin:8px 0 0"></p>
       </div>
+      <div id="lj-upgrade-tip" hidden style="margin:12px 0 20px;padding:18px;border:1px solid #b99761;border-radius:12px;background:#211e19;color:#f7eee0"><strong style="color:#f2c786">Signature past misschien beter bij jouw wensen</strong><p id="lj-upgrade-text" style="margin:10px 0;line-height:1.6"></p><button class="btn btn-gold" type="button" id="lj-upgrade-button">Upgrade naar Signature ↗</button></div>
       <div class="lj-builder-actions">
         <button class="btn btn-outline" type="button" id="lj-builder-back" hidden>← Vorige stap</button>
         <button class="btn btn-dark" type="button" id="lj-builder-next">Extra opties kiezen ↗</button>
@@ -351,6 +352,14 @@
     pageCount.disabled=!pageOption.checked;
     const pages=pageOption.checked?Number(pageCount.value):0;
     const total=(pkg?Number(pkg.dataset.price):0)+oneTime.reduce((n,o)=>n+Number(o.dataset.price)*(o===pageOption?pages:1),0);
+    const signatureTotal=2250+oneTime.filter(o=>o!==pageOption&&o!==reviewInput&&o!==gbInput).reduce((n,o)=>n+Number(o.dataset.price),0);
+    const difference=signatureTotal-total;
+    const tip=root.querySelector('#lj-upgrade-tip');
+    tip.hidden=!(pkg&&pkg.value==='Professioneel'&&pages>0&&difference<=250);
+    if(!tip.hidden){
+      const msg=difference>0?'Voor '+money(difference)+' extra':difference===0?'Voor hetzelfde bedrag':'Voor '+money(-difference)+' minder';
+      root.querySelector('#lj-upgrade-text').textContent=msg+' krijg je Signature met maximaal 12 pagina’s, premium design, uitgebreidere SEO, meer revisierondes en de Google-reviewknop inbegrepen.';
+    }
     const yearly=root.querySelector('[name="lj_care_term"]:checked')?.value==='jaarlijks';
     const monthly=pkg&&!yearly?39.99:0,annual=pkg&&yearly?399.88:0;
     const lines=[];if(pkg)lines.push([pkg.value,money(Number(pkg.dataset.price))]);
@@ -379,6 +388,16 @@
   }
   radios.forEach(r=>r.addEventListener('change',update));options.forEach(o=>o.addEventListener('change',update));
   root.querySelector('#lj-extra-page-count').addEventListener('change',update);
+  root.querySelector('#lj-upgrade-button').addEventListener('click',()=>{
+    const signature=radios.find(r=>r.value==='Signature');
+    if(!signature)return;
+    signature.checked=true;
+    const pageOptionForUpgrade=root.querySelector('[value="Extra websitepagina"]');
+    pageOptionForUpgrade.checked=false;
+    root.querySelector('[value="Google-reviewknop instellen"]').checked=false;
+    root.querySelector('[value="Google Bedrijfsprofiel inrichten"]').checked=false;
+    update();
+  });
   root.querySelectorAll('[name="lj_care_term"]').forEach(o=>o.addEventListener('change',update));
   next.addEventListener('click',()=>{if(step===1&&!chosen()){radios[0].focus();alert('Kies eerst een websitepakket.');return;}step=Math.min(3,step+1);update();render();});
   back.addEventListener('click',()=>{step=Math.max(1,step-1);render();});

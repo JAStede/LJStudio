@@ -136,10 +136,11 @@
           <label class="lj-choice"><input type="checkbox" name="lj_extra" value="Domeinregistratie en DNS-instelling" data-price="39.95"><strong>Domeinregistratie</strong><small>Nieuw domein registreren en technisch koppelen. Jaarlijkse domeinkosten apart.</small><span class="lj-choice-price">+ €39,95</span></label>
           <label class="lj-choice"><input type="checkbox" name="lj_extra" value="Zakelijke mailbox instellen" data-price="49.95"><strong>Zakelijke e-mail</strong><small>Bijvoorbeeld info@jouwbedrijf.nl, inclusief inrichting op één apparaat. Mailboxkosten apart.</small><span class="lj-choice-price">+ €49,95</span></label>
           <label class="lj-choice"><input type="checkbox" name="lj_extra" value="Extra zakelijke mailbox" data-price="19.95"><strong>Extra mailbox</strong><small>Bijvoorbeeld administratie@. Externe mailboxkosten apart.</small><span class="lj-choice-price">+ €19,95</span></label>
-          <label class="lj-choice"><input type="checkbox" name="lj_extra" value="Domeinverhuizing" data-price="59.95"><strong>Domein verhuizen</strong><small>Verhuizing begeleiden en DNS-instellingen controleren.</small><span class="lj-choice-price">+ €59,95</span></label>
+          <label class="lj-choice"><input type="checkbox" name="lj_extra" value="Bestaand domein koppelen" data-price="0"><strong>Bestaand domein koppelen</strong><small>Je hebt al een domein. Wij koppelen de nieuwe website via de bestaande provider; verhuizen is niet nodig.</small><span class="lj-choice-price">Inbegrepen</span></label>
+          <label class="lj-choice"><input type="checkbox" name="lj_extra" value="Domeinverhuizing" data-price="59.95"><strong>Domein verhuizen</strong><small>Verhuizing begeleiden en DNS-instellingen controleren. Alleen nodig als je van provider wilt wisselen.</small><span class="lj-choice-price">+ €59,95</span></label>
           <label class="lj-choice" data-gbp-option><input type="checkbox" name="lj_extra" value="Google Bedrijfsprofiel inrichten" data-price="99.95"><strong>Google Bedrijfsprofiel</strong><small>Inbegrepen bij Professioneel en Signature.</small><span class="lj-choice-price" data-gbp-price>+ €99,95</span></label>
           <label class="lj-choice"><input type="checkbox" name="lj_extra" value="Extra websitepagina" data-price="125"><strong>Extra pagina</strong><small>Vanaf €125 per pagina, op basis van bestaande vormgeving.</small><span class="lj-choice-price">+ vanaf €125</span></label>
-          <label class="lj-choice"><input type="checkbox" name="lj_care" value="LJ Care" data-price="39.99"><strong>LJ Care</strong><small>Hostingbeheer en maximaal 30 minuten kleine wijzigingen per maand.</small><span class="lj-choice-price">+ €39,99 / maand</span></label>
+          <label class="lj-choice"><input type="checkbox" name="lj_care" value="LJ Care" data-price="39.99" checked disabled><strong>LJ Care — verplicht bij nieuwe websites</strong><small>Hostingbeheer en maximaal 30 minuten kleine wijzigingen per maand. Standaard onderdeel van iedere nieuwe website.</small><span class="lj-choice-price">€39,99 / maand</span></label>
         </div>
       </div>
       <div class="lj-builder-summary" aria-live="polite">
@@ -151,9 +152,9 @@
       <div class="lj-builder-actions">
         <button class="btn btn-outline" type="button" id="lj-builder-back" hidden>← Vorige stap</button>
         <button class="btn btn-dark" type="button" id="lj-builder-next">Extra opties kiezen ↗</button>
-        <button class="btn btn-outline" type="button" id="lj-builder-skip" hidden>Geen extra opties — verder naar contactgegevens ↗</button>
+        <button class="btn btn-outline" type="button" id="lj-builder-skip">Alleen dit pakket — verder naar contactgegevens ↗</button>
       </div>
-      <p class="lj-builder-note">Vrijblijvende prijsindicatie, exclusief 21% btw en eventuele externe of terugkerende kosten. De definitieve prijs en werkzaamheden bevestigen we in een offerte. Een demo betreft uitsluitend de homepage.</p>
+      <p class="lj-builder-note">Vrijblijvende prijsindicatie, exclusief 21% btw. LJ Care (€39,99 per maand excl. btw) is verplicht bij nieuwe websites; domeinregistratie, mailboxen en eventuele externe kosten zijn apart. De definitieve prijs en werkzaamheden bevestigen we in een offerte. Een demo betreft uitsluitend de homepage.</p>
     </div>
   </div>
 </section>
@@ -332,11 +333,12 @@
     gb.querySelector('[data-gbp-price]').textContent=includedGB()?'Inbegrepen':'+ €99,95';
     const active=options.filter(o=>o.checked&&!o.disabled),oneTime=active.filter(o=>o.name!=='lj_care');
     const total=(pkg?Number(pkg.dataset.price):0)+oneTime.reduce((n,o)=>n+Number(o.dataset.price),0);
-    const monthly=active.some(o=>o.name==='lj_care')?39.99:0;
+    const monthly=pkg?39.99:0;
     const lines=[];if(pkg)lines.push([pkg.value,money(Number(pkg.dataset.price))]);
     if(includedGB())lines.push(['Google Bedrijfsprofiel','Inbegrepen']);
     if(pkg&&pkg.value==='Signature')lines.push(['Google-reviewknop','Inbegrepen']);
-    active.forEach(o=>lines.push([o.value,o.name==='lj_care'?money(39.99)+'/mnd':(o.value==='Extra websitepagina'?'vanaf ':'')+money(Number(o.dataset.price))]));
+    if(pkg)lines.push(['LJ Care — hostingbeheer',money(39.99)+'/mnd']);
+    active.forEach(o=>lines.push([o.value,(o.value==='Extra websitepagina'?'vanaf ':'')+(Number(o.dataset.price)===0?'Inbegrepen':money(Number(o.dataset.price)))]));
     root.querySelector('#lj-builder-lines').replaceChildren(...(lines.length?lines:[['Kies eerst een pakket','—']]).map(([name,price])=>{const li=document.createElement('li');const a=document.createElement('span'),b=document.createElement('span');a.textContent=name;b.textContent=price;li.append(a,b);return li;}));
     root.querySelector('#lj-builder-total').textContent=money(total);
     root.querySelector('#lj-builder-recurring').textContent=monthly?'Daarnaast '+money(monthly)+' per maand voor LJ Care (excl. btw).':'';
@@ -348,7 +350,7 @@
   }
   function render(){
     packages.hidden=step!==1;extras.hidden=step!==2;contact.hidden=step!==3;
-    back.hidden=step===1;next.hidden=step===3;skip.hidden=step!==2;
+    back.hidden=step===1;next.hidden=step===3;skip.hidden=step===3;
     root.querySelector('#lj-builder-step').textContent='Stap '+step+' van 3 — '+(['','Kies je website','Extra opties','Contactgegevens'][step]);
     next.textContent=step===1?'Extra opties kiezen ↗':'Verder naar contactgegevens ↗';
     root.hidden=step===3;
@@ -357,13 +359,17 @@
   radios.forEach(r=>r.addEventListener('change',update));options.forEach(o=>o.addEventListener('change',update));
   next.addEventListener('click',()=>{if(step===1&&!chosen()){radios[0].focus();alert('Kies eerst een websitepakket.');return;}step=Math.min(3,step+1);update();render();});
   back.addEventListener('click',()=>{step=Math.max(1,step-1);render();});
-  skip.addEventListener('click',()=>{options.forEach(o=>o.checked=false);step=3;update();render();});
+  skip.addEventListener('click',()=>{if(!chosen()){radios[0].focus();alert('Kies eerst een websitepakket.');return;}options.forEach(o=>{if(o.name==='lj_extra')o.checked=false;});step=3;update();render();});
+  const domainNew=root.querySelector('[value="Domeinregistratie en DNS-instelling"]'),domainExisting=root.querySelector('[value="Bestaand domein koppelen"]'),domainMove=root.querySelector('[value="Domeinverhuizing"]');
+  domainNew.addEventListener('change',()=>{if(domainNew.checked){domainExisting.checked=false;domainMove.checked=false;}update();});
+  domainExisting.addEventListener('change',()=>{if(domainExisting.checked){domainNew.checked=false;domainMove.checked=false;}update();});
+  domainMove.addEventListener('change',()=>{if(domainMove.checked){domainNew.checked=false;domainExisting.checked=false;}update();});
   const params=new URLSearchParams(location.search),requested=params.get('pakket');
   if(requested){const r=radios.find(x=>x.value.toLowerCase()===requested.toLowerCase());if(r)r.checked=true;}
   update();
   const form=document.getElementById('project-form');form?.addEventListener('submit',()=>update(),{capture:true});
   const change=document.createElement('button');change.type='button';change.className='btn btn-outline';change.textContent='← Samenstelling wijzigen';change.style.marginBottom='20px';
-  change.addEventListener('click',()=>{step=2;render();});contact.querySelector('.form-panel').prepend(change);
+  change.addEventListener('click',()=>{step=1;render();});contact.querySelector('.form-panel').prepend(change);
 })();
 </script>
 </body>

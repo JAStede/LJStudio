@@ -341,6 +341,7 @@
     gbInput.disabled=!!includedGB();if(gbInput.disabled)gbInput.checked=false;
     gb.querySelector('[data-gbp-price]').textContent=includedGB()?'Inbegrepen':'+ €99,95';
     const active=options.filter(o=>o.checked&&!o.disabled),oneTime=active.filter(o=>o.name!=='lj_care');
+    if(step===2)skip.hidden=active.some(o=>o.name==='lj_extra');
     const pageOption=root.querySelector('[value="Extra websitepagina"]'),pageCount=root.querySelector('#lj-extra-page-count');
     pageCount.disabled=!pageOption.checked;
     const pages=pageOption.checked?Number(pageCount.value):0;
@@ -365,7 +366,7 @@
   }
   function render(){
     packages.hidden=step!==1;extras.hidden=step!==2;contact.hidden=step!==3;
-    back.hidden=step===1;next.hidden=step===3;skip.hidden=step===3;
+    back.hidden=step===1;next.hidden=step===3;skip.hidden=step===3 || (step===2 && options.some(o=>o.name==='lj_extra' && o.checked && !o.disabled));
     root.querySelector('#lj-builder-step').textContent='Stap '+step+' van 3 — '+(['','Kies je website','Extra opties','Contactgegevens'][step]);
     next.textContent=step===1?'Extra opties kiezen ↗':'Verder naar contactgegevens ↗';
     root.hidden=step===3;

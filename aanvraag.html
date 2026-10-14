@@ -140,7 +140,14 @@
           <label class="lj-choice"><input type="checkbox" name="lj_extra" value="Domeinverhuizing" data-price="59.95"><strong>Domein verhuizen</strong><small>Verhuizing begeleiden en DNS-instellingen controleren. Alleen nodig als je van provider wilt wisselen.</small><span class="lj-choice-price">+ €59,95</span></label>
           <label class="lj-choice" data-gbp-option><input type="checkbox" name="lj_extra" value="Google Bedrijfsprofiel inrichten" data-price="99.95"><strong>Google Bedrijfsprofiel</strong><small>Inbegrepen bij Professioneel en Signature.</small><span class="lj-choice-price" data-gbp-price>+ €99,95</span></label>
           <label class="lj-choice"><input type="checkbox" name="lj_extra" value="Extra websitepagina" data-price="125"><strong>Extra pagina</strong><small>Vanaf €125 per pagina, op basis van bestaande vormgeving.</small><span class="lj-choice-price">+ vanaf €125</span></label>
-          <label class="lj-choice"><input type="checkbox" name="lj_care" value="LJ Care" data-price="39.99" checked disabled><strong>LJ Care — verplicht bij nieuwe websites</strong><small>Hostingbeheer en maximaal 30 minuten kleine wijzigingen per maand. Standaard onderdeel van iedere nieuwe website.</small><span class="lj-choice-price">€39,99 / maand</span></label>
+          <div class="lj-choice" style="grid-column:1/-1;cursor:default">
+            <strong>LJ Care — verplicht bij nieuwe websites</strong>
+            <small>Hostingbeheer en maximaal 30 minuten kleine wijzigingen per maand. Kies hoe je wilt betalen.</small>
+            <div style="display:flex;gap:18px;flex-wrap:wrap;margin-top:16px">
+              <label style="cursor:pointer"><input type="radio" name="lj_care_term" value="maandelijks" checked> Maandelijks — €39,99 per maand</label>
+              <label style="cursor:pointer"><input type="radio" name="lj_care_term" value="jaarlijks"> Jaarlijks — €399,88 per jaar <strong style="color:#8c682f">(bespaar €80)</strong></label>
+            </div>
+          </div>
         </div>
       </div>
       <div class="lj-builder-summary" aria-live="polite">
@@ -154,7 +161,7 @@
         <button class="btn btn-dark" type="button" id="lj-builder-next">Extra opties kiezen ↗</button>
         <button class="btn btn-outline" type="button" id="lj-builder-skip">Alleen dit pakket — verder naar contactgegevens ↗</button>
       </div>
-      <p class="lj-builder-note">Vrijblijvende prijsindicatie, exclusief 21% btw. LJ Care (€39,99 per maand excl. btw) is verplicht bij nieuwe websites; domeinregistratie, mailboxen en eventuele externe kosten zijn apart. De definitieve prijs en werkzaamheden bevestigen we in een offerte. Een demo betreft uitsluitend de homepage.</p>
+      <p class="lj-builder-note">Vrijblijvende prijsindicatie, exclusief 21% btw. LJ Care is verplicht bij nieuwe websites: €39,99 per maand of €399,88 per jaar bij jaarlijkse vooruitbetaling (bespaar €80), excl. btw; domeinregistratie, mailboxen en eventuele externe kosten zijn apart. De definitieve prijs en werkzaamheden bevestigen we in een offerte. Een demo betreft uitsluitend de homepage.</p>
     </div>
   </div>
 </section>
@@ -184,6 +191,8 @@
         <input type="hidden" name="gekozen_extra_opties" id="lj-form-extras">
         <input type="hidden" name="indicatie_eenmalig_ex_btw" id="lj-form-total">
         <input type="hidden" name="indicatie_maandelijks_ex_btw" id="lj-form-monthly">
+        <input type="hidden" name="lj_care_betaaltermijn" id="lj-form-term">
+        <input type="hidden" name="lj_care_jaarlijks_ex_btw" id="lj-form-yearly">
 
         <div aria-hidden="true" style="position:absolute;left:-9999px;">
           <label>Laat dit veld leeg
@@ -333,19 +342,22 @@
     gb.querySelector('[data-gbp-price]').textContent=includedGB()?'Inbegrepen':'+ €99,95';
     const active=options.filter(o=>o.checked&&!o.disabled),oneTime=active.filter(o=>o.name!=='lj_care');
     const total=(pkg?Number(pkg.dataset.price):0)+oneTime.reduce((n,o)=>n+Number(o.dataset.price),0);
-    const monthly=pkg?39.99:0;
+    const yearly=root.querySelector('[name="lj_care_term"]:checked')?.value==='jaarlijks';
+    const monthly=pkg&&!yearly?39.99:0,annual=pkg&&yearly?399.88:0;
     const lines=[];if(pkg)lines.push([pkg.value,money(Number(pkg.dataset.price))]);
     if(includedGB())lines.push(['Google Bedrijfsprofiel','Inbegrepen']);
     if(pkg&&pkg.value==='Signature')lines.push(['Google-reviewknop','Inbegrepen']);
-    if(pkg)lines.push(['LJ Care — hostingbeheer',money(39.99)+'/mnd']);
+    if(pkg)lines.push(['LJ Care — hostingbeheer',yearly?money(399.88)+'/jaar (bespaar €80)':money(39.99)+'/mnd']);
     active.forEach(o=>lines.push([o.value,(o.value==='Extra websitepagina'?'vanaf ':'')+(Number(o.dataset.price)===0?'Inbegrepen':money(Number(o.dataset.price)))]));
     root.querySelector('#lj-builder-lines').replaceChildren(...(lines.length?lines:[['Kies eerst een pakket','—']]).map(([name,price])=>{const li=document.createElement('li');const a=document.createElement('span'),b=document.createElement('span');a.textContent=name;b.textContent=price;li.append(a,b);return li;}));
     root.querySelector('#lj-builder-total').textContent=money(total);
-    root.querySelector('#lj-builder-recurring').textContent=monthly?'Daarnaast '+money(monthly)+' per maand voor LJ Care (excl. btw).':'';
+    root.querySelector('#lj-builder-recurring').textContent=pkg?(yearly?'Daarnaast '+money(annual)+' per jaar voor LJ Care, jaarlijks vooruit te betalen (excl. btw).':'Daarnaast '+money(monthly)+' per maand voor LJ Care (excl. btw).'):'';
     document.getElementById('lj-form-package').value=pkg?pkg.value:'';
     document.getElementById('lj-form-extras').value=active.map(o=>o.value+(o.value==='Extra websitepagina'?' (vanaf €125)':'')).join(', ')||'Geen';
     document.getElementById('lj-form-total').value=money(total)+(oneTime.some(o=>o.value==='Extra websitepagina')?' (vanafprijs)':'');
-    document.getElementById('lj-form-monthly').value=monthly?money(monthly):'Geen';
+    document.getElementById('lj-form-monthly').value=monthly?money(monthly):'Niet van toepassing';
+    document.getElementById('lj-form-yearly').value=annual?money(annual):'Niet van toepassing';
+    document.getElementById('lj-form-term').value=yearly?'Jaarlijks vooruitbetalen (bespaar €80)':'Maandelijks betalen';
     const subject=document.getElementById('onderwerp');if(pkg&&subject)subject.value=[...subject.options].find(o=>o.textContent.includes(pkg.value))?.value||subject.value;
   }
   function render(){
@@ -357,6 +369,7 @@
     if(step===3){contact.scrollIntoView({behavior:'smooth',block:'start'});}else{root.scrollIntoView({behavior:'smooth',block:'start'});}
   }
   radios.forEach(r=>r.addEventListener('change',update));options.forEach(o=>o.addEventListener('change',update));
+  root.querySelectorAll('[name="lj_care_term"]').forEach(o=>o.addEventListener('change',update));
   next.addEventListener('click',()=>{if(step===1&&!chosen()){radios[0].focus();alert('Kies eerst een websitepakket.');return;}step=Math.min(3,step+1);update();render();});
   back.addEventListener('click',()=>{step=Math.max(1,step-1);render();});
   skip.addEventListener('click',()=>{if(!chosen()){radios[0].focus();alert('Kies eerst een websitepakket.');return;}options.forEach(o=>{if(o.name==='lj_extra')o.checked=false;});step=3;update();render();});

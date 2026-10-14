@@ -385,7 +385,7 @@
     packages.hidden=step!==1;extras.hidden=step!==2;contact.hidden=step!==3;
     back.hidden=step===1;next.hidden=step===3;skip.hidden=step===3 || (step===2 && options.some(o=>o.name==='lj_extra' && o.checked && !o.disabled));
     root.querySelector('#lj-builder-step').textContent='Stap '+step+' van 3 — '+(['','Kies je website','Extra opties','Contactgegevens'][step]);
-    next.textContent=step===1?'Extra opties kiezen ↗':'Verder naar contactgegevens ↗';
+    next.textContent=step===1?'Extra opties kiezen':'Verder naar contactgegevens';
     root.hidden=step===3;
     if(step===3){contact.scrollIntoView({behavior:'smooth',block:'start'});}else{root.scrollIntoView({behavior:'smooth',block:'start'});}
   }

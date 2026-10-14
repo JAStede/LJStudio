@@ -49,6 +49,20 @@
 
 <script defer src="assets/script.js"></script>
 <script defer src="assets/form-handler.js"></script>
+<style>
+/* LJ Studio websiteconfigurator */
+.lj-builder{max-width:1160px;margin:0 auto 38px;padding:clamp(20px,4vw,40px);background:#fff;border:1px solid #ded5c7;border-radius:18px;box-shadow:0 18px 60px #17120d0b}
+.lj-builder h2{font-size:clamp(28px,4vw,43px);line-height:1.12;margin:8px 0 15px}.lj-builder p{line-height:1.65}
+.lj-builder-step{font-size:12px;font-weight:800;letter-spacing:.1em;color:#907044;text-transform:uppercase}
+.lj-builder-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:22px 0}
+.lj-choice{display:block;position:relative;border:1px solid #d7cec1;border-radius:12px;padding:20px;cursor:pointer;background:#fcfaf7;transition:.2s;min-width:0}
+.lj-choice:hover,.lj-choice:focus-within{border-color:#ad8549;transform:translateY(-2px)}.lj-choice:has(input:checked){border:2px solid #ad8549;background:#fbf2e3;padding:19px}
+.lj-choice input{accent-color:#98713c;margin:0 8px 0 0}.lj-choice strong{font-size:16px}.lj-choice small{display:block;margin:8px 0 0;color:#62594e;line-height:1.5}
+.lj-choice .lj-choice-price{display:block;font-weight:800;font-size:20px;margin-top:12px}
+.lj-builder-summary{background:#191713;color:#f7eee0;padding:23px;border-radius:12px;margin:22px 0}.lj-builder-summary h3{font-size:19px;color:#fff;margin:0 0 12px}.lj-builder-summary ul{list-style:none;padding:0;margin:0}.lj-builder-summary li{display:flex;justify-content:space-between;gap:12px;padding:6px 0;font-size:14px}.lj-builder-summary strong{color:#f2c786}.lj-builder-total{border-top:1px solid #5e5141;margin-top:12px;padding-top:14px;font-size:22px;font-weight:800;display:flex;justify-content:space-between;gap:10px}.lj-builder-total span:last-child{color:#f2c786}
+.lj-builder-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center}.lj-builder-actions button{cursor:pointer}.lj-builder-note{font-size:12px;color:#6e665c;margin:12px 0 0}.lj-builder [hidden],.form-panel[hidden]{display:none!important}
+@media(max-width:800px){.lj-builder-grid{grid-template-columns:1fr}.lj-choice{padding:16px}.lj-choice:has(input:checked){padding:15px}.lj-builder-actions .btn{width:100%;justify-content:center}}
+</style>
 </head>
 
 <body>
@@ -102,7 +116,47 @@
   </div>
 </section>
 
-<section class="section section-light">
+<section class="section section-light" id="website-samenstellen">
+  <div class="container">
+    <div class="lj-builder" id="lj-builder">
+      <div class="lj-builder-step" id="lj-builder-step">Stap 1 van 3 — Kies je website</div>
+      <div id="lj-builder-packages">
+        <h2>Stel jouw <em>website samen.</em></h2>
+        <p>Kies het pakket dat bij je onderneming past. Daarna kun je extra diensten toevoegen, net zoals bij het samenstellen van een auto.</p>
+        <div class="lj-builder-grid" role="radiogroup" aria-label="Websitepakket">
+          <label class="lj-choice"><input type="radio" name="lj_package" value="Essentieel" data-price="750"><strong>Essentieel</strong><small>Tot 3 commerciële pagina's · technische SEO-basis</small><span class="lj-choice-price">€750</span></label>
+          <label class="lj-choice"><input type="radio" name="lj_package" value="Professioneel" data-price="1350"><strong>Professioneel</strong><small>Tot 6 pagina's · lokale SEO · Google Bedrijfsprofiel · homepage-demo</small><span class="lj-choice-price">€1.350</span></label>
+          <label class="lj-choice"><input type="radio" name="lj_package" value="Signature" data-price="2250"><strong>Signature</strong><small>Tot 12 pagina's · verdiepte SEO · premium design · Google-reviewknop · homepage-demo</small><span class="lj-choice-price">€2.250</span></label>
+        </div>
+      </div>
+      <div id="lj-builder-extras" hidden>
+        <h2>Maak jouw website <em>compleet.</em></h2>
+        <p>Kies alleen wat je nodig hebt. Inbegrepen diensten worden niet dubbel berekend.</p>
+        <div class="lj-builder-grid">
+          <label class="lj-choice"><input type="checkbox" name="lj_extra" value="Domeinregistratie en DNS-instelling" data-price="39.95"><strong>Domeinregistratie</strong><small>Nieuw domein registreren en technisch koppelen. Jaarlijkse domeinkosten apart.</small><span class="lj-choice-price">+ €39,95</span></label>
+          <label class="lj-choice"><input type="checkbox" name="lj_extra" value="Zakelijke mailbox instellen" data-price="49.95"><strong>Zakelijke e-mail</strong><small>Bijvoorbeeld info@jouwbedrijf.nl, inclusief inrichting op één apparaat. Mailboxkosten apart.</small><span class="lj-choice-price">+ €49,95</span></label>
+          <label class="lj-choice"><input type="checkbox" name="lj_extra" value="Extra zakelijke mailbox" data-price="19.95"><strong>Extra mailbox</strong><small>Bijvoorbeeld administratie@. Externe mailboxkosten apart.</small><span class="lj-choice-price">+ €19,95</span></label>
+          <label class="lj-choice"><input type="checkbox" name="lj_extra" value="Domeinverhuizing" data-price="59.95"><strong>Domein verhuizen</strong><small>Verhuizing begeleiden en DNS-instellingen controleren.</small><span class="lj-choice-price">+ €59,95</span></label>
+          <label class="lj-choice" data-gbp-option><input type="checkbox" name="lj_extra" value="Google Bedrijfsprofiel inrichten" data-price="99.95"><strong>Google Bedrijfsprofiel</strong><small>Inbegrepen bij Professioneel en Signature.</small><span class="lj-choice-price" data-gbp-price>+ €99,95</span></label>
+          <label class="lj-choice"><input type="checkbox" name="lj_extra" value="Extra websitepagina" data-price="125"><strong>Extra pagina</strong><small>Vanaf €125 per pagina, op basis van bestaande vormgeving.</small><span class="lj-choice-price">+ vanaf €125</span></label>
+          <label class="lj-choice"><input type="checkbox" name="lj_care" value="LJ Care" data-price="39.99"><strong>LJ Care</strong><small>Hostingbeheer en maximaal 30 minuten kleine wijzigingen per maand.</small><span class="lj-choice-price">+ €39,99 / maand</span></label>
+        </div>
+      </div>
+      <div class="lj-builder-summary" aria-live="polite">
+        <h3>Jouw samenstelling</h3>
+        <ul id="lj-builder-lines"><li><span>Kies eerst een pakket</span><span>—</span></li></ul>
+        <div class="lj-builder-total"><span>Indicatie eenmalig</span><span id="lj-builder-total">€0</span></div>
+        <p id="lj-builder-recurring" style="color:#ead8bf;font-size:13px;margin:8px 0 0"></p>
+      </div>
+      <div class="lj-builder-actions">
+        <button class="btn btn-outline" type="button" id="lj-builder-back" hidden>← Vorige stap</button>
+        <button class="btn btn-dark" type="button" id="lj-builder-next">Extra opties kiezen ↗</button>
+      </div>
+      <p class="lj-builder-note">Vrijblijvende prijsindicatie, exclusief 21% btw en eventuele externe of terugkerende kosten. De definitieve prijs en werkzaamheden bevestigen we in een offerte. Een demo betreft uitsluitend de homepage.</p>
+    </div>
+  </div>
+</section>
+<section class="section section-light" id="lj-contact-stage" hidden>
   <div class="container contact-layout">
 
     <div class="reveal">
@@ -124,6 +178,10 @@
 
     <div class="form-panel reveal">
       <form class="contact-form" data-ajax-form="" id="project-form">
+        <input type="hidden" name="website_pakket" id="lj-form-package">
+        <input type="hidden" name="gekozen_extra_opties" id="lj-form-extras">
+        <input type="hidden" name="indicatie_eenmalig_ex_btw" id="lj-form-total">
+        <input type="hidden" name="indicatie_maandelijks_ex_btw" id="lj-form-monthly">
 
         <div aria-hidden="true" style="position:absolute;left:-9999px;">
           <label>Laat dit veld leeg
@@ -257,5 +315,54 @@
   </div>
 </footer>
 
+<script>
+(() => {
+  const root=document.getElementById('lj-builder');if(!root)return;
+  const packages=root.querySelector('#lj-builder-packages'),extras=root.querySelector('#lj-builder-extras');
+  const contact=document.getElementById('lj-contact-stage'),back=root.querySelector('#lj-builder-back'),next=root.querySelector('#lj-builder-next');
+  const radios=[...root.querySelectorAll('[name="lj_package"]')],options=[...root.querySelectorAll('[name="lj_extra"],[name="lj_care"]')];
+  const money=n=>new Intl.NumberFormat('nl-NL',{style:'currency',currency:'EUR',minimumFractionDigits:Number.isInteger(n)?0:2,maximumFractionDigits:2}).format(n);
+  let step=1;
+  const chosen=()=>radios.find(r=>r.checked);
+  const includedGB=()=>chosen()&&chosen().value!=='Essentieel';
+  function update(){
+    const pkg=chosen(),gb=root.querySelector('[data-gbp-option]'),gbInput=gb.querySelector('input');
+    gbInput.disabled=!!includedGB();if(gbInput.disabled)gbInput.checked=false;
+    gb.querySelector('[data-gbp-price]').textContent=includedGB()?'Inbegrepen':'+ €99,95';
+    const active=options.filter(o=>o.checked&&!o.disabled),oneTime=active.filter(o=>o.name!=='lj_care');
+    const total=(pkg?Number(pkg.dataset.price):0)+oneTime.reduce((n,o)=>n+Number(o.dataset.price),0);
+    const monthly=active.some(o=>o.name==='lj_care')?39.99:0;
+    const lines=[];if(pkg)lines.push([pkg.value,money(Number(pkg.dataset.price))]);
+    if(includedGB())lines.push(['Google Bedrijfsprofiel','Inbegrepen']);
+    if(pkg&&pkg.value==='Signature')lines.push(['Google-reviewknop','Inbegrepen']);
+    active.forEach(o=>lines.push([o.value,o.name==='lj_care'?money(39.99)+'/mnd':(o.value==='Extra websitepagina'?'vanaf ':'')+money(Number(o.dataset.price))]));
+    root.querySelector('#lj-builder-lines').replaceChildren(...(lines.length?lines:[['Kies eerst een pakket','—']]).map(([name,price])=>{const li=document.createElement('li');const a=document.createElement('span'),b=document.createElement('span');a.textContent=name;b.textContent=price;li.append(a,b);return li;}));
+    root.querySelector('#lj-builder-total').textContent=money(total);
+    root.querySelector('#lj-builder-recurring').textContent=monthly?'Daarnaast '+money(monthly)+' per maand voor LJ Care (excl. btw).':'';
+    document.getElementById('lj-form-package').value=pkg?pkg.value:'';
+    document.getElementById('lj-form-extras').value=active.map(o=>o.value+(o.value==='Extra websitepagina'?' (vanaf €125)':'')).join(', ')||'Geen';
+    document.getElementById('lj-form-total').value=money(total)+(oneTime.some(o=>o.value==='Extra websitepagina')?' (vanafprijs)':'');
+    document.getElementById('lj-form-monthly').value=monthly?money(monthly):'Geen';
+    const subject=document.getElementById('onderwerp');if(pkg&&subject)subject.value=[...subject.options].find(o=>o.textContent.includes(pkg.value))?.value||subject.value;
+  }
+  function render(){
+    packages.hidden=step!==1;extras.hidden=step!==2;contact.hidden=step!==3;
+    back.hidden=step===1;next.hidden=step===3;
+    root.querySelector('#lj-builder-step').textContent='Stap '+step+' van 3 — '+(['','Kies je website','Extra opties','Contactgegevens'][step]);
+    next.textContent=step===1?'Extra opties kiezen ↗':'Verder naar contactgegevens ↗';
+    root.hidden=step===3;
+    if(step===3){contact.scrollIntoView({behavior:'smooth',block:'start'});}else{root.scrollIntoView({behavior:'smooth',block:'start'});}
+  }
+  radios.forEach(r=>r.addEventListener('change',update));options.forEach(o=>o.addEventListener('change',update));
+  next.addEventListener('click',()=>{if(step===1&&!chosen()){radios[0].focus();alert('Kies eerst een websitepakket.');return;}step=Math.min(3,step+1);update();render();});
+  back.addEventListener('click',()=>{step=Math.max(1,step-1);render();});
+  const params=new URLSearchParams(location.search),requested=params.get('pakket');
+  if(requested){const r=radios.find(x=>x.value.toLowerCase()===requested.toLowerCase());if(r)r.checked=true;}
+  update();
+  const form=document.getElementById('project-form');form?.addEventListener('submit',()=>update(),{capture:true});
+  const change=document.createElement('button');change.type='button';change.className='btn btn-outline';change.textContent='← Samenstelling wijzigen';change.style.marginBottom='20px';
+  change.addEventListener('click',()=>{step=2;render();});contact.querySelector('.form-panel').prepend(change);
+})();
+</script>
 </body>
 </html>

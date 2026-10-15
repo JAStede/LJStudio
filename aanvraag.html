@@ -372,7 +372,7 @@
     active.forEach(o=>lines.push([o===pageOption?`Extra pagina's (${pages}x)`:o.value,(o===pageOption?'vanaf ':'')+(Number(o.dataset.price)===0?'Inbegrepen':money(Number(o.dataset.price)*(o===pageOption?pages:1)))]));
     root.querySelector('#lj-builder-lines').replaceChildren(...(lines.length?lines:[['Kies eerst een pakket','—']]).map(([name,price])=>{const li=document.createElement('li');const a=document.createElement('span'),b=document.createElement('span');a.textContent=name;b.textContent=price;li.append(a,b);return li;}));
     root.querySelector('#lj-builder-total').textContent=money(total);
-    root.querySelector('#lj-builder-recurring').textContent=pkg?(yearly?'Daarnaast '+money(annual)+' per jaar voor LJ Care, jaarlijks vooruit te betalen (excl. btw).':'Daarnaast '+money(monthly)+' per maand voor LJ Care (excl. btw).'):'';
+    root.querySelector('#lj-builder-recurring').textContent=pkg?(yearly?'Daarnaast '+money(annual)+' voor LJ Care Jaar: eerste 12 maanden vast, vooraf te betalen (excl. btw); daarna doorlopend tegen regulier maandtarief.':'Daarnaast '+money(monthly)+' per maand voor LJ Care Flex, met één maand opzegtermijn (excl. btw).'):'';
     document.getElementById('lj-form-package').value=pkg?pkg.value:'';
     document.getElementById('lj-form-extras').value=active.map(o=>o===pageOption?`Extra websitepagina: ${pages} x vanaf €125 = vanaf ${money(pages*125)}`:o.value).join(', ')||'Geen';
     document.getElementById('lj-form-total').value=money(total)+(oneTime.some(o=>o.value==='Extra websitepagina')?' (vanafprijs)':'');

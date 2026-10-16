@@ -124,12 +124,14 @@
         <h2>Stel jouw <em>website samen.</em></h2>
         <p>Kies het pakket dat bij je onderneming past. Daarna kun je extra diensten toevoegen.</p>
         <div class="lj-builder-grid" role="radiogroup" aria-label="Websitepakket">
+          <label class="lj-choice"><input type="radio" name="lj_package" value="Bestaande website" data-price="0"><strong>Ik heb al een website</strong><small>Alleen hosting aanvragen, overstappen of wisselen tussen LJ Hosting en LJ Care. Geen nieuw websitepakket nodig.</small><span class="lj-choice-price">Op aanvraag</span></label>
           <label class="lj-choice"><input type="radio" name="lj_package" value="Essentieel" data-price="750"><strong>Essentieel</strong><small>Tot 3 commerciële pagina's · technische SEO-basis</small><span class="lj-choice-price">€750</span></label>
           <label class="lj-choice"><input type="radio" name="lj_package" value="Professioneel" data-price="1350"><strong>Professioneel</strong><small>Tot 6 pagina's · lokale SEO · Google Bedrijfsprofiel · homepage-demo</small><span class="lj-choice-price">€1.350</span></label>
           <label class="lj-choice"><input type="radio" name="lj_package" value="Signature" data-price="2250"><strong>Signature</strong><small>Tot 12 pagina's · verdiepte SEO · premium design · Google-reviewknop · homepage-demo</small><span class="lj-choice-price">€2.250</span></label>
         </div>
       </div>
       <div id="lj-builder-extras" hidden>
+        <p id="lj-existing-note" hidden style="padding:16px;border:1px solid #c9a36b;border-radius:10px;line-height:1.7"><strong>Je hebt al een website.</strong> Kies hieronder LJ Hosting of LJ Care, of wijzig je huidige abonnement. Overname, technische compatibiliteit, eventuele migratiekosten en de ingangsdatum stemmen we eerst met je af. Je huidige abonnement wordt niet automatisch opgezegd. Dit is een vrijblijvende aanvraag.</p>
         <h2>Maak jouw website <em>compleet.</em></h2>
         <p>Kies alleen wat je nodig hebt. Inbegrepen diensten worden niet dubbel berekend.</p>
         <div class="lj-builder-grid">
@@ -332,13 +334,16 @@
   const money=n=>new Intl.NumberFormat('nl-NL',{style:'currency',currency:'EUR',minimumFractionDigits:Number.isInteger(n)?0:2,maximumFractionDigits:2}).format(n);
   let step=1;
   const chosen=()=>radios.find(r=>r.checked);
-  const includedGB=()=>chosen()&&chosen().value!=='Essentieel';
+  const existing=()=>chosen()?.value==='Bestaande website';
+  const includedGB=()=>chosen()&&!existing()&&chosen().value!=='Essentieel';
   function update(){
     const pkg=chosen(),gb=root.querySelector('[data-gbp-option]'),gbInput=gb.querySelector('input');
     gbInput.disabled=!!includedGB();if(gbInput.disabled)gbInput.checked=false;
     gb.querySelector('[data-gbp-price]').textContent=includedGB()?'Inbegrepen':'+ €99,95';
     const review=root.querySelector('[data-review-option]'),reviewInput=review.querySelector('input');
     const reviewIncluded=!!pkg&&pkg.value==='Signature';
+    root.querySelectorAll('[name="lj_extra"]').forEach(o=>{if(existing()){o.checked=false;o.disabled=true;}else if(o!==gbInput&&o!==reviewInput){o.disabled=false;}});
+    root.querySelector('#lj-existing-note').hidden=!existing();
     reviewInput.disabled=reviewIncluded;if(reviewIncluded)reviewInput.checked=false;
     review.querySelector('[data-review-price]').textContent=reviewIncluded?'Inbegrepen':'+ €49,95';
     const active=options.filter(o=>o.checked&&!o.disabled),oneTime=active.filter(o=>o.name!=='lj_care');
@@ -358,27 +363,27 @@
     const term=root.querySelector('[name="lj_care_term"]:checked')?.value||'hosting';
     const yearly=term==='jaarlijks',hosting=term==='hosting',transfer=term==='overdracht';
     const monthly=pkg&&term==='maandelijks'?39.99:0,annual=pkg?(yearly?399.88:hosting?199:0):0;
-    const lines=[];if(pkg)lines.push([pkg.value,money(Number(pkg.dataset.price))]);
+    const lines=[];if(pkg)lines.push([existing()?'Bestaande website — geen nieuw webdesignpakket':pkg.value,existing()?'Prijs hostingovername na beoordeling':money(Number(pkg.dataset.price))]);
     if(includedGB())lines.push(['Google Bedrijfsprofiel','Inbegrepen']);
     if(pkg&&pkg.value==='Signature')lines.push(['Google-reviewknop','Inbegrepen']);
     if(pkg)lines.push([transfer?'Websiteoverdracht — eigen hosting':hosting?'LJ Hosting':yearly?'LJ Care Jaar':'LJ Care Flex',transfer?'Geen abonnement':hosting?money(199)+'/jaar':yearly?money(399.88)+'/jaar':money(39.99)+'/mnd']);
     active.forEach(o=>lines.push([o===pageOption?`Extra pagina's (${pages}x)`:o.value,(o===pageOption?'vanaf ':'')+(Number(o.dataset.price)===0?'Inbegrepen':money(Number(o.dataset.price)*(o===pageOption?pages:1)))]));
     root.querySelector('#lj-builder-lines').replaceChildren(...(lines.length?lines:[['Kies eerst een pakket','—']]).map(([name,price])=>{const li=document.createElement('li');const a=document.createElement('span'),b=document.createElement('span');a.textContent=name;b.textContent=price;li.append(a,b);return li;}));
-    root.querySelector('#lj-builder-total').textContent=money(total);
+    root.querySelector('#lj-builder-total').textContent=existing()?'Op aanvraag':money(total);
     root.querySelector('#lj-builder-recurring').textContent=pkg?(transfer?'Geen abonnement: je regelt zelf hosting en domein.':hosting?'Daarnaast '+money(199)+' per jaar voor LJ Hosting (excl. btw, jaarlijks vooraf).':yearly?'Daarnaast '+money(399.88)+' per jaar voor LJ Care Jaar (excl. btw, eerste 12 maanden vast).':'Daarnaast '+money(39.99)+' per maand voor LJ Care Flex (excl. btw).'):'';
     document.getElementById('lj-form-package').value=pkg?pkg.value:'';
     document.getElementById('lj-form-extras').value=active.map(o=>o===pageOption?`Extra websitepagina: ${pages} x vanaf €125 = vanaf ${money(pages*125)}`:o.value).join(', ')||'Geen';
-    document.getElementById('lj-form-total').value=money(total)+(oneTime.some(o=>o.value==='Extra websitepagina')?' (vanafprijs)':'');
+    document.getElementById('lj-form-total').value=existing()?'Geen nieuw websitepakket; eventuele migratiekosten op offerte':money(total)+(oneTime.some(o=>o.value==='Extra websitepagina')?' (vanafprijs)':'');
     document.getElementById('lj-form-monthly').value=monthly?money(monthly):'Niet van toepassing';
     document.getElementById('lj-form-yearly').value=annual?money(annual):'Niet van toepassing';
     document.getElementById('lj-form-term').value=transfer?'Websiteoverdracht zonder abonnement':hosting?'LJ Hosting — jaarlijks €199':yearly?'LJ Care Jaar — jaarlijks €399,88':'LJ Care Flex — maandelijks €39,99';
-    const subject=document.getElementById('onderwerp');if(pkg&&subject)subject.value=[...subject.options].find(o=>o.textContent.includes(pkg.value))?.value||subject.value;
+    const subject=document.getElementById('onderwerp');if(pkg&&subject){if(existing())subject.value=transfer?'Websiteoverdracht zonder hosting':hosting?'LJ Hosting':'LJ Care / onderhoud';else subject.value=[...subject.options].find(o=>o.textContent.includes(pkg.value))?.value||subject.value;}
   }
   function render(){
     packages.hidden=step!==1;extras.hidden=step!==2;contact.hidden=step!==3;
     back.hidden=step===1;next.hidden=step===3;skip.hidden=step===3 || (step===2 && options.some(o=>o.name==='lj_extra' && o.checked && !o.disabled));
     root.querySelector('#lj-builder-step').textContent='Stap '+step+' van 3 — '+(['','Kies je website','Extra opties','Contactgegevens'][step]);
-    next.textContent=step===1?'Extra opties kiezen':'Verder naar contactgegevens';
+    next.textContent=step===1?(existing()?'Abonnement kiezen':'Extra opties kiezen'):'Verder naar contactgegevens';
     root.hidden=step===3;
     if(step===3){contact.scrollIntoView({behavior:'smooth',block:'start'});}else{root.scrollIntoView({behavior:'smooth',block:'start'});}
   }
@@ -395,7 +400,7 @@
     update();
   });
   root.querySelectorAll('[name="lj_care_term"]').forEach(o=>o.addEventListener('change',update));
-  next.addEventListener('click',()=>{if(step===1&&!chosen()){radios[0].focus();alert('Kies eerst een websitepakket.');return;}step=Math.min(3,step+1);update();render();});
+  next.addEventListener('click',()=>{if(step===1&&!chosen()){radios[0].focus();alert('Kies eerst een optie.');return;}step=Math.min(3,step+1);update();render();});
   back.addEventListener('click',()=>{step=Math.max(1,step-1);render();});
   skip.addEventListener('click',()=>{if(!chosen()){radios[0].focus();alert('Kies eerst een websitepakket.');return;}options.forEach(o=>{if(o.name==='lj_extra')o.checked=false;});step=3;update();render();});
   const domainNew=root.querySelector('[value="Domeinregistratie en DNS-instelling"]'),domainExisting=root.querySelector('[value="Bestaand domein koppelen"]'),domainMove=root.querySelector('[value="Domeinverhuizing"]');
@@ -405,6 +410,7 @@
   const params=new URLSearchParams(location.search),requested=params.get('pakket');
   if(requested){const r=radios.find(x=>x.value.toLowerCase()===requested.toLowerCase());if(r)r.checked=true;}
   const abonnement=params.get('abonnement');
+  if((abonnement==='hosting'||abonnement==='maandelijks'||abonnement==='jaarlijks')&&!requested){const current=radios.find(r=>r.value==='Bestaande website');if(current)current.checked=true;}
   if(['hosting','maandelijks','jaarlijks','overdracht'].includes(abonnement)){
     const subscription=root.querySelectorAll('[name="lj_care_term"]');
     const selected=[...subscription].find(r=>r.value===abonnement);

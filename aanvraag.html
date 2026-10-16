@@ -404,6 +404,12 @@
   domainMove.addEventListener('change',()=>{if(domainMove.checked){domainNew.checked=false;domainExisting.checked=false;}update();});
   const params=new URLSearchParams(location.search),requested=params.get('pakket');
   if(requested){const r=radios.find(x=>x.value.toLowerCase()===requested.toLowerCase());if(r)r.checked=true;}
+  const abonnement=params.get('abonnement');
+  if(['hosting','maandelijks','jaarlijks','overdracht'].includes(abonnement)){
+    const subscription=root.querySelectorAll('[name="lj_care_term"]');
+    const selected=[...subscription].find(r=>r.value===abonnement);
+    if(selected)selected.checked=true;
+  }
   update();
   const form=document.getElementById('project-form');form?.addEventListener('submit',()=>update(),{capture:true});
   const change=document.createElement('button');change.type='button';change.className='btn btn-outline';change.textContent='← Samenstelling wijzigen';change.style.marginBottom='20px';
